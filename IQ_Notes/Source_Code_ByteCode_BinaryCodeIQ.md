@@ -2,7 +2,7 @@
 
 This example file is:
 
-- C:\Users\prasa\OneDrive\Documents\LearningPlaywright\Chapter_01_Basics\01_HelloWorld.js
+- C:\Users\prasa\OneDrive\Documents\LearningPlaywright\01_Chapter_Basics\01_HelloWorld.js
 
 The content is:
 
