@@ -27,6 +27,7 @@ A learning repository tracking JavaScript fundamentals from first principles, al
   - [10.1 — Transforming: `map` & `filter`](#101--transforming-map--filter)
   - [10.2 — Sorting](#102--sorting)
   - [10.3 — Slicing](#103--slicing)
+  - [10.4 — Hoisting](#104--hoisting)
   - [10.4 — Combining: `concat`, spread, `join`](#104--combining-concat-spread-join)
   - [10.5 — Checking: `isArray`, `every`, `some`](#105--checking-isarray-every-some)
   - [10.6 — Copying: shallow vs reference](#106--copying-shallow-vs-reference)
