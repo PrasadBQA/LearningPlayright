@@ -1,0 +1,20 @@
+// The flow is:
+// 1. Test 1 logs (sync)
+// 2. setTimeout callback is queued (not run yet)
+// 3. Test 3 logs (sync, call stack now empty)
+// 4. Event loop picks up the queued callback -> Test 2 logs
+
+console.log("Test1: Started!");
+
+setTimeout(function(){
+    console.log("Test 2: API Response received");
+});
+
+/** Because setTimeout is asynchronous — it schedules the callback to run later, even without a timeout value.
+  When you omit the delay, it defaults to 0, but that doesn't mean "run immediately." The callback goes into
+  the macrotask queue and only executes after the current synchronous code (all the console.log calls)
+  finishes */
+
+  
+
+console.log("Test 3: Moving to next last");
