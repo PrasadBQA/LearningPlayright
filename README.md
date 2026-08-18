@@ -27,7 +27,6 @@ A learning repository tracking JavaScript fundamentals from first principles, al
   - [10.1 — Transforming: `map` & `filter`](#101--transforming-map--filter)
   - [10.2 — Sorting](#102--sorting)
   - [10.3 — Slicing](#103--slicing)
-  - [10.4 — Hoisting](#104--hoisting)
   - [10.4 — Combining: `concat`, spread, `join`](#104--combining-concat-spread-join)
   - [10.5 — Checking: `isArray`, `every`, `some`](#105--checking-isarray-every-some)
   - [10.6 — Copying: shallow vs reference](#106--copying-shallow-vs-reference)
@@ -36,6 +35,37 @@ A learning repository tracking JavaScript fundamentals from first principles, al
   - [11.1 — The Four Function Types](#111--the-four-function-types)
   - [11.2 — Function Expressions & Arrow Functions](#112--function-expressions--arrow-functions)
   - [11.3 — IIFE (Immediately Invoked Function Expression)](#113--iife-immediately-invoked-function-expression)
+  - [11.4 — Spread & Rest Parameters](#114--spread--rest-parameters)
+  - [11.5 — `return` in Depth](#115--return-in-depth)
+  - [11.6 — `var` vs `let` vs `const`](#116--var-vs-let-vs-const)
+  - [11.7 — Hoisting](#117--hoisting)
+  - [11.8 — Temporal Dead Zone (TDZ)](#118--temporal-dead-zone-tdz)
+  - [11.9 — Hoisting Trap: Declaration vs Expression](#119--hoisting-trap-declaration-vs-expression)
+- [12 — Scope & Closures](#12--scope--closures)
+  - [12.1 — Scope Chain](#121--scope-chain)
+  - [12.2 — Closures](#122--closures)
+  - [12.3 — Closures in Real Test Code](#123--closures-in-real-test-code)
+- [13 — Strings](#13--strings)
+  - [13.1 — Properties & Character Access](#131--properties--character-access)
+  - [13.2 — Searching & Checking](#132--searching--checking)
+  - [13.3 — Extracting Substrings](#133--extracting-substrings)
+  - [13.4 — Case, Whitespace, Replacement & Concatenation](#134--case-whitespace-replacement--concatenation)
+  - [13.5 — Splitting, Joining & Conversion](#135--splitting-joining--conversion)
+  - [13.6 — Complete String Cheatsheet](#136--complete-string-cheatsheet)
+- [14 — Objects](#14--objects)
+  - [14.1 — Property Access & Mutation](#141--property-access--mutation)
+  - [14.2 — Nested Objects & Methods](#142--nested-objects--methods)
+  - [14.3 — Value vs Reference](#143--value-vs-reference)
+- [15 — Multi-Dimensional Arrays](#15--multi-dimensional-arrays)
+  - [15.1 — Star Patterns](#151--star-patterns)
+- [16 — Callbacks](#16--callbacks)
+  - [16.1 — Sync vs Async Callbacks](#161--sync-vs-async-callbacks)
+  - [16.2 — Callback Hell](#162--callback-hell)
+- [17 — Promises](#17--promises)
+  - [17.1 — then / catch / finally](#171--then--catch--finally)
+  - [17.2 — Chaining Promises](#172--chaining-promises)
+  - [17.3 — all / allSettled / race](#173--all--allsettled--race)
+- [18 — Async / Await](#18--async--await)
 - [MCQ — Practice Questions](#mcq--practice-questions)
 - [IQ_Notes — Reference Library](#iq_notes--reference-library)
 
@@ -150,7 +180,72 @@ LearnPlaywright3x/
 │   ├── 86_Fn_Arrow.js                       # declaration → expression → arrow, same output
 │   ├── 87_Fn_Arrow.js                       # implicit vs block-bodied arrows
 │   ├── 88_REAL.js                           # same status-code check in all three styles
-│   └── 89.fn.js                             # IIFE — anonymous and arrow form
+│   ├── 89.fn.js                             # IIFE — anonymous and arrow form
+│   ├── 90_Spead_Fn.js                       # spread args in, rest params collect
+│   ├── 91_Return_Fn.js                      # if/else-if/else returns, no return → undefined
+│   ├── 92_Var_Let_Const.js                  # var function-scope vs let block-scope vs const
+│   ├── 93.Hoisting.js                       # memory-creation vs execution phase
+│   ├── 94_Var_Hoisting.js                   # var hoisted as undefined
+│   ├── 95_Fn_Hoisting.js                    # var hoisting inside a function scope
+│   ├── 96_Let_Hoisting.js                   # let hoisted but uninitialized → ReferenceError
+│   ├── 97_Let.js                            # var re-declaration inside a block
+│   ├── 98_TDZ.js                            # Temporal Dead Zone in a block
+│   ├── 99.IQ.js                             # var leaks out of the if block
+│   ├── 100_IQ.js                            # let shadowing + TDZ trap
+│   ├── 101.js                               # const for URLs and config, no reassignment
+│   ├── 102_Hoisting_TDZ.md                  # full hoisting + TDZ reference guide
+│   └── 103_IQ.js                            # declaration hoists, expression does not
+├── 12_chapter_Fn_Closure/
+│   ├── 104_Scope_Fn.js                      # global vs local scope, inner sees outer
+│   ├── 105_Closure.js                       # returned function remembers its birthplace
+│   ├── 106_Closure_Remembers.js             # counter with private state (increment/get)
+│   ├── 107_Fn_Closure_REAL.js               # max-retry tracker per test
+│   └── 108_Fn_Simple.js                     # rate limiter returning true/false
+├── 13_String/
+│   ├── 109_String.js                        # quotes, template literals, multiline, String()
+│   ├── 110_String_Fn.js                     # length, index, .at(), charAt, charCodeAt
+│   ├── 111.Str_Searching.js                 # includes, startsWith/endsWith, indexOf
+│   ├── 112_Extraction_String.js             # slice, substring, negative indexes, .at()
+│   ├── 113_String_More.js                   # case, trim, replace, concat
+│   ├── 114_Extra.js                         # regex replacement, split, join
+│   ├── 115_Fn_String_Conversion.js          # String/Number conversion and immutability
+│   └── String_Cheatsheet.md                 # complete SDET-focused string reference
+├── 14_Objects/
+│   ├── 116_Objects.js                       # literals, key access, reference equality
+│   ├── 117_Object_Person.js                 # deeply nested object with methods
+│   ├── 118_Object.js                        # object method and this
+│   ├── 119_Objects.js                       # access, add, and update properties
+│   ├── 120_Config.js                        # dynamic config properties and delete
+│   └── 121_CallBy_Ref_CallByValue.js        # primitive copies vs object references
+├── 15_Multi_Dimensions_Array/
+│   ├── 122_Array.js                         # 1D vs 2D arrays, nested-loop grid print
+│   ├── 124_Array_Fn.js                      # map/reduce over rows, real suite results
+│   ├── 125_Right_Pattern.js                 # right-triangle star pattern
+│   ├── 126_Left_Hand.js                     # inverted (left-hand) star pattern
+│   └── 127_Pyramid_Pattern.js               # centered pyramid pattern
+├── 16_Callback/
+│   ├── 128_Callback.js                      # callback as arg — 3 ways to pass (named/anon/arrow)
+│   ├── 129_Callback.js                      # async test callback signature
+│   ├── 130_Sync_Callback.js                 # synchronous forEach callback
+│   ├── 131_Async_Callback.js                # setTimeout — async callback ordering
+│   ├── 132_CallbackHell.js                  # nested login-flow callbacks (the "hell")
+│   ├── 133_Call_RealHello.js                # deep nested error-first callback chain
+│   ├── 134_Call_Return.js                   # callback returning a value
+│   └── 135_Pyramid_DOM.js                   # nested DOM-step callback pyramid
+├── 17_Promise/
+│   ├── 136_Promise.js                       # new Promise, resolve/reject states
+│   ├── 137_REAL_Promise_API.js              # .then on a resolved promise
+│   ├── 138_REAL_Promise_API.js              # .catch on a rejected promise
+│   ├── 139_Promise_Finally.js               # .finally always runs
+│   ├── 140_Promise_REAL.js                  # promise chaining for a login flow
+│   ├── 141_Promise.All.js                   # Promise.all — all-or-fail
+│   ├── 142_Promise_Settle.js                # Promise.allSettled — report every test
+│   ├── 143.Promise.race.js                  # Promise.race — first to settle wins
+│   ├── 144_Promise.IQ.js                    # promise state quiz questions
+│   └── 145.IQ.js                            # all/allSettled quiz questions
+├── 18_Async_Await/
+│   ├── 146.js                               # .then chain vs async/await shape
+│   └── 147_BetterWay.js                     # async/await login flow (the "better way")
 ├── MCQ/
 │   └── Array_MCQ.md                         # array practice multiple-choice questions
 └── IQ_Notes/
@@ -1293,6 +1388,321 @@ name1();
 
 ---
 
+#### 11.4 — Spread & Rest Parameters
+
+**Concept:** They look identical (`...`) but face opposite directions. **Spread** at the *call site* unpacks an array into individual arguments. **Rest** in the *parameter list* collects however many arguments arrive into one real array.
+
+**Why:** Test data lives in arrays but functions take arguments — spread bridges that gap, and rest lets one helper accept `hasError(404)` or `hasError(...twentyCodes)` without an overload per count.
+
+**Q&A — why use this?**
+- **Q: How do I tell spread from rest?** A: Position. `add(...nums)` at the call site is spread (array → arguments). `function f(...codes)` in the signature is rest (arguments → array).
+- **Q: What happens if the array is longer than the parameter list?** A: Extras are silently dropped. `add(a, b, c)` called with `[1, 2, 3, 5]` sees only `1, 2, 3` and returns `6` — no error, which makes it a quiet bug.
+- **Q: What's the gotcha?** A: Rest must be the **last** parameter, and there can only be one. `function f(...a, b)` is a `SyntaxError`. Unlike the old `arguments` object, a rest param is a genuine array, so `.some()` / `.map()` work directly.
+
+```mermaid
+flowchart LR
+    A["nums = [1, 2, 3]"] -->|"spread at CALL site"| B["add&#40;1, 2, 3&#41;"]
+    C["hasError&#40;200, 404&#41;"] -->|"rest in PARAM list"| D["codes = [200, 404] — real array"]
+    D --> E["codes.some&#40;c =&gt; c &gt;= 400&#41; → true"]
+```
+
+```js
+function add(a, b, c) {
+    return a + b + c;
+}
+
+let num = [1, 2, 3, 5];
+console.log(add(...num));   // 6 — spread unpacks; the extra 5 is dropped silently
+
+// Rest — collects any number of arguments into a real array
+function hasError(...codes) {
+    return codes.some(c => c >= 400);
+}
+
+let responseCodes  = [200, 201, 404];
+let responseCodes2 = [200, 201, 404, 500];
+console.log(hasError(...responseCodes));   // true
+console.log(hasError(200, 201));           // false
+console.log(hasError(...responseCodes2));  // true
+```
+
+| `...` where | Name | Direction |
+|-------------|------|-----------|
+| Call site — `f(...arr)` | Spread | Array → separate arguments |
+| Parameter list — `function f(...arr)` | Rest | Separate arguments → array |
+
+---
+
+#### 11.5 — `return` in Depth
+
+**Concept:** `return` does two things at once: it hands a value back to the caller **and** exits the function immediately. Any code after it in the same path never runs.
+
+**Why:** An `if / else if / else` ladder of returns is how one function maps an input onto labelled buckets (HTTP code → category), and the final `else` is what stops unmatched inputs silently becoming `undefined`.
+
+**Q&A — why use this?**
+- **Q: Why add a final `else` when the `if`s already cover the ranges?** A: Because they usually don't. Without it, `getStatus(301)` falls off the end and returns `undefined` — the `else` makes the gap explicit as `"unknown"`.
+- **Q: Can I return an array or object?** A: Yes, `return` takes any single value — `return [2, 2, 3, 5, 4]` or `return { name: "pramod" }`. To hand back several values, wrap them in one array or object.
+- **Q: What's the gotcha?** A: Calling `getStatus(200);` on its own line computes the string and throws it away. Assign it or log it — and never put code after `return`, it is unreachable.
+
+```mermaid
+flowchart TD
+    C["getStatus&#40;code&#41;"] --> A{"200–299?"}
+    A -->|yes| S["return 'Success'"]
+    A -->|no| B{"400–499?"}
+    B -->|yes| CE["return 'client error'"]
+    B -->|no| D{">= 500?"}
+    D -->|yes| SE["return 'server error'"]
+    D -->|no| U["else → return 'unknown'<br/>&#40;300s and &lt; 200 land here&#41;"]
+```
+
+```js
+function getStatus(code) {
+    if (code >= 200 && code < 300) {
+        return "Success";
+    } else if (code >= 400 && code < 500) {
+        return "client error";
+    } else if (code >= 500) {
+        return "server error";
+    } else {
+        return "unknown";     // 300s and anything < 200 — otherwise undefined
+    }
+}
+
+console.log(getStatus(200));  // "Success"
+console.log(getStatus(404));  // "client error"
+console.log(getStatus(301));  // "unknown"
+
+// No return statement → the caller gets undefined
+function logTest(name) {
+    console.log(`Running: ${name}`);
+}
+console.log(logTest("smoke suite")); // logs, then undefined
+
+// return accepts any single value — array, object, anything
+function getScores() { return [2, 2, 3, 5, 4]; }
+```
+
+---
+
+#### 11.6 — `var` vs `let` vs `const`
+
+**Concept:** `var` is **function-scoped** and re-declarable, `let` is **block-scoped** and re-assignable, `const` is block-scoped and cannot be re-assigned after its first value.
+
+**Why:** `var` leaking out of an `if` block is the source of the classic "why is my variable the wrong value 200 lines later?" bug, which is exactly why modern JS defaults to `const`, reaches for `let` when the value must change, and never uses `var`.
+
+**Q&A — why use this?**
+- **Q: Which do I pick?** A: `const` by default. Switch to `let` only when the variable genuinely gets reassigned (loop counters, accumulators). Never `var` in new code.
+- **Q: Does `const` mean the value is frozen?** A: No — only the **binding** is. `const a = [1,2,3]; a.push(10);` is legal because the array reference never changed. `a = [4]` throws `TypeError: Assignment to constant variable`.
+- **Q: What's the gotcha?** A: `let` cannot be re-declared in the same scope (`SyntaxError: Identifier 'a' has already been declared`), but it *can* be shadowed in an inner block — an inner `let b = 5` is a brand-new variable that vanishes when the block ends.
+
+```mermaid
+flowchart TD
+    V["var"] --> VF["Function scoped — leaks out of if/for blocks"]
+    V --> VR["Re-declarable ⚠️"]
+    L["let"] --> LB["Block scoped — dies at the closing brace"]
+    L --> LR["Re-assignable, NOT re-declarable"]
+    C["const"] --> CB["Block scoped"]
+    C --> CR["Binding locked — but object/array contents still mutable"]
+```
+
+```js
+let b = 20;                       // global scope
+console.log(b);                   // 20
+
+function printHello() {
+    let b = 30;                   // local — shadows the global
+    console.log(b);               // 30
+    if (true) {
+        let b = 5;                // block — shadows the local
+        console.log(b);           // 5
+    }
+    console.log("let ->", b);     // 30 — inner b is gone
+}
+printHello();
+console.log(b);                   // 20 — global never touched
+
+// var allows re-declaration; let does not
+var a = 11;
+var a = 100;                      // fine (and dangerous)
+// let x = 10; let x = 20;        // SyntaxError
+
+// const — binding locked, contents not
+const pi = 3.14;
+// pi = 3.14159;                  // TypeError: Assignment to constant variable
+const nums = [1, 2, 3];
+nums.push(10);                    // allowed — the reference never changed
+
+const prod_api_url = "https://app.vwo.com/#login";
+const qa_api_url   = "https://qa.vwo.com/#login";
+```
+
+| | `var` | `let` | `const` |
+|---|:---:|:---:|:---:|
+| Scope | Function | Block | Block |
+| Re-declare in same scope | Yes | No | No |
+| Re-assign | Yes | Yes | No |
+| Hoisted as | `undefined` | TDZ | TDZ |
+| Use in new code | Never | When it changes | Default |
+
+---
+
+#### 11.7 — Hoisting
+
+**Concept:** Before running a line of code, the JS engine does a **memory-creation pass** that registers every `var`, `let`, `const`, `function`, and `class` declaration in the scope. Only then does it execute top to bottom. Declarations are registered early, assignments are not.
+
+**Why:** It explains two things that otherwise look like magic: why a `function` can be called above its own definition, and why a `var` read before its line prints `undefined` instead of throwing.
+
+**Q&A — why use this?**
+- **Q: Does hoisting physically move my code?** A: No. Nothing is rearranged. It is a mental model for the two-phase engine — declarations are known before execution starts, so the code *behaves* as if they moved up.
+- **Q: Why is a `var` read before its line `undefined` rather than an error?** A: `var` is registered **and** initialised to `undefined` in the memory phase. The assignment stays put on its original line, so anything reading earlier sees `undefined`.
+- **Q: What's the gotcha?** A: `var` hoisting is scoped to the whole **function**, not the block, so `var` inside an `if` is visible to the entire function and can quietly overwrite an outer value of the same name.
+
+```mermaid
+flowchart TD
+    Src["Your source file"] --> P1["Phase 1 — Memory Creation<br/>scan all declarations, allocate"]
+    P1 --> V["var greeting = undefined"]
+    P1 --> F["function getUserStatus = full body"]
+    P1 --> L["let / const = registered but UNINITIALIZED &#40;TDZ&#41;"]
+    V --> P2["Phase 2 — Execution, line by line"]
+    F --> P2
+    L --> P2
+    P2 --> R["assignments happen where you wrote them"]
+```
+
+```js
+// var — hoisted AND initialised to undefined
+console.log(greeting);      // undefined  (not an error)
+var greeting = "Hello!";
+console.log(greeting);      // "Hello!"
+
+// Engine's view:
+// var greeting = undefined;   <-- phase 1
+// console.log(greeting);      <-- undefined
+// greeting = "Hello!";        <-- assignment stays in place
+
+// Function declarations hoist with their whole body — callable above their line
+getUserStatus();
+function getUserStatus() {
+    console.log(status_code);   // undefined — var hoisted inside this function
+    var status_code = "Active";
+    console.log(status_code);   // "Active"
+}
+
+// var leaks out of the block — the if body overwrites the outer value
+var a = "Pramod";
+if (true) {
+    console.log(a);   // "Pramod"
+    a = "temp";
+}
+console.log(a);       // "temp"  — same variable, function-scoped
+```
+
+Full walkthrough with class hoisting, interview traps, and phase diagrams: [`11_chapter_Funtions/102_Hoisting_TDZ.md`](11_chapter_Funtions/102_Hoisting_TDZ.md).
+
+---
+
+#### 11.8 — Temporal Dead Zone (TDZ)
+
+**Concept:** `let` and `const` *are* hoisted, but unlike `var` they are not given a value. From the top of the block until their declaration line they exist in an unusable state — the Temporal Dead Zone. Touching them there throws `ReferenceError: Cannot access 'x' before initialization`.
+
+**Why:** The TDZ turns the silent `undefined` bug into a loud crash at the exact line that caused it, which is the single strongest argument for `let`/`const` over `var`.
+
+**Q&A — why use this?**
+- **Q: If `let` throws, is it really hoisted?** A: Yes — and the error proves it. The message is "cannot access before initialization", not "is not defined". The engine already knows the name exists; it just refuses to hand back a value.
+- **Q: When does the TDZ end?** A: The instant execution reaches the declaration line. `let a = 10` initialises `a` and the zone closes for the rest of that block.
+- **Q: What's the gotcha?** A: Shadowing. `let a = 10` outside, then `console.log(a)` inside an `if` that later declares its own `let a = 20`, does **not** print `10` — the inner `a` shadows the outer one from the top of the block, so the read hits the inner TDZ and throws.
+
+```mermaid
+flowchart TD
+    B["Enter block { }"] --> C["a is created ✅ — but has NO value ❌"]
+    C --> Z["🚫 TDZ — any read throws ReferenceError"]
+    Z --> D["let a = 10;  ← declaration line"]
+    D --> OK["a = 10 ✅ — TDZ over, normal use from here"]
+```
+
+```js
+// var — no TDZ, just undefined
+console.log(greeting);   // undefined
+var greeting = "Hello!";
+
+// let — TDZ, throws instead
+// console.log(username);
+// let username = "Dutta";
+// ReferenceError: Cannot access 'username' before initialization
+
+// TDZ inside a block
+{
+    // console.log(a);   // ReferenceError — a exists but is uninitialized
+    let a = 10;
+    console.log(a);      // 10 — TDZ closed
+}
+
+// The shadowing trap — this does NOT print 10
+let a = 10;
+console.log(a);          // 10
+if (true) {
+    // console.log(a);   // ReferenceError — inner `a` shadows from the block top
+    let a = 20;
+    console.log(a);      // 20
+}
+```
+
+| Read before declaration | `var` | `let` / `const` |
+|---|:---:|:---:|
+| Result | `undefined` | `ReferenceError` |
+| Bug surfaces | Later, somewhere else | Immediately, on the exact line |
+
+---
+
+#### 11.9 — Hoisting Trap: Declaration vs Expression
+
+**Concept:** A `function` **declaration** is hoisted with its entire body, so it can be called above its own definition. A function **expression** assigned to `const`/`let` is not — only the binding is registered, and it sits in the TDZ until its line runs.
+
+**Why:** This is the single most-asked hoisting interview question, and in real code it decides whether a helper file's top-level call works or crashes on import.
+
+**Q&A — why use this?**
+- **Q: Why does `greet("Alice")` work on line 1 but `sayHi("Bob")` throws?** A: `greet` is a declaration — name *and* body are in memory before execution. `sayHi` is a `const` holding a function; the name is registered but uninitialised until its line.
+- **Q: `TypeError` or `ReferenceError`?** A: With `const`/`let` it is `ReferenceError: Cannot access 'sayHi' before initialization` (TDZ). You only get `TypeError: sayHi is not a function` when the expression is assigned to a **`var`**, because `var` is pre-filled with `undefined` and you end up calling `undefined()`.
+- **Q: What's the gotcha?** A: Arrow functions are expressions too, so `const f = () => {}` has exactly the same restriction. Define helpers above their first use, or use declarations when order-independence matters.
+
+```mermaid
+flowchart TD
+    P["Phase 1 — Memory Creation"] --> D["function greet&#40;&#41; { ... }<br/>name + FULL BODY hoisted ✅"]
+    P --> E["const sayHi = function &#40;&#41; { ... }<br/>name only, UNINITIALIZED 🚫 TDZ"]
+    P --> V["var sayHi = function &#40;&#41; { ... }<br/>name = undefined ⚠️"]
+    D --> OK["greet&#40;'Alice'&#41; above its line → works"]
+    E --> R["sayHi&#40;'Bob'&#41; above its line → ReferenceError"]
+    V --> T["sayHi&#40;'Bob'&#41; above its line → TypeError: not a function"]
+```
+
+```js
+// Declaration — callable before its own definition
+greet("Alice");                 // "Hi"  ✅ body was hoisted
+
+function greet(name) {
+    console.log('Hi');
+    return `Hello, ${name}!`;
+}
+
+// Expression on const — NOT callable before its line
+// sayHi("Bob");
+// ReferenceError: Cannot access 'sayHi' before initialization
+
+const sayHi = function (name) {
+    return `Hi, ${name}!`;
+};
+console.log(sayHi("Bob"));      // "Hi, Bob!"  ✅ after the line
+```
+
+| Form | Hoisted with body? | Call before its line |
+|------|:------------------:|----------------------|
+| `function f() {}` | Yes | Works |
+| `const f = function () {}` | No | `ReferenceError` (TDZ) |
+| `const f = () => {}` | No | `ReferenceError` (TDZ) |
+| `var f = function () {}` | Name only, `undefined` | `TypeError: f is not a function` |
+
+---
+
 ### Functions in Real Test Code
 
 **Concept:** The same validation logic written as a declaration, an expression, and an arrow — proving the three forms are interchangeable for ordinary test helpers.
@@ -1338,6 +1748,879 @@ console.log(isSuccess(204), isSuccess(300)); // true false
 
 ---
 
+### 12 — Scope & Closures
+
+**Concept:** A **closure** is a function that keeps access to the variables of the scope it was created in, even after that outer function has already finished and returned.
+
+**Why:** It is how JavaScript gets private state without classes — a retry counter, a rate limiter, or a config holder that no other code can reach in and corrupt.
+
+**Q&A — why use this?**
+- **Q: When do I reach for it?** A: Any time a value must survive between calls but stay invisible to the rest of the file — attempt counters, caches, one-per-test fixtures.
+- **Q: What does it replace?** A: A module-level `let attempts = 0` that anything can overwrite, or a whole class written just to hold one private field.
+- **Q: What's the gotcha?** A: Each call to the outer function creates a **new, independent** closure. Two counters from `makeCounter()` do not share a count — and a closure held in memory keeps its variables alive, so a closure over a huge object leaks it.
+
+```mermaid
+flowchart TD
+    C["startBrowser&#40;&#41; called"] --> S["local: let name = 'edge'"]
+    S --> I["defines installBrowser&#40;&#41; — sees name"]
+    I --> R["returns installBrowser &#40;not called&#41;"]
+    R --> X["startBrowser&#40;&#41; finishes ❌ its scope should die"]
+    X --> K["but name is KEPT ALIVE by the closure ✅"]
+    K --> U["runTc&#40;&#41; → logs 'edge'"]
+```
+
+```js
+function startBrowser() {
+    let name = "edge";              // local to startBrowser
+
+    function installBrowser() {
+        console.log(name);          // closes over `name`
+    }
+
+    return installBrowser;          // returned, not called
+}
+
+const runTc = startBrowser();       // startBrowser has now finished
+runTc();                            // "edge" — the variable survived
+
+// installBrowser();                // ReferenceError — only reachable via runTc
+```
+
+---
+
+#### 12.1 — Scope Chain
+
+**Concept:** Scope decides which variables a line of code can see. An inner function can read everything in its own scope plus every enclosing scope out to global; the outer scope can never look inward.
+
+**Why:** It is the rule that makes closures possible, and it explains every `ReferenceError: x is not defined` you will hit — the name existed, just not on the path outward from where you asked.
+
+**Q&A — why use this?**
+- **Q: Which direction does lookup travel?** A: Outward only. `inner` → `outer` → global. The engine stops at the first match, so an inner `let x` shadows an outer `x` of the same name.
+- **Q: Why can't `outer()` read `inner`'s variables?** A: `inner`'s scope is created when it runs and destroyed when it returns. `console.log(y)` in `outer` throws `ReferenceError: y is not defined`.
+- **Q: What's the gotcha?** A: A function declared inside an `if` or `for` block is still block-scoped under `let`/`const` rules, and a `var` inside that block escapes to the whole function — mixing the two makes the chain hard to read.
+
+```mermaid
+flowchart TD
+    G["Global scope — let env = 'staging'"] --> O["outer&#40;&#41; scope — let x = 10"]
+    O --> I["inner&#40;&#41; scope — let y = 20"]
+    I -->|"can read"| O
+    O -->|"can read"| G
+    O -->|"CANNOT read y"| I
+```
+
+```js
+let env = "staging";              // global
+
+function setupConfig() {
+    let timeout = 3000;           // local
+    console.log(env);             // ✅ reaches outward to global
+    console.log(timeout);         // ✅ own scope
+}
+setupConfig();
+// console.log(timeout);          // ❌ ReferenceError — local died with the call
+
+function outer() {
+    let x = 10;
+
+    function inner() {
+        let y = 20;
+        console.log(x);           // ✅ 10 — inner reads outer
+    }
+
+    inner();
+    // console.log(y);            // ❌ ReferenceError — outer cannot read inner
+}
+outer();
+```
+
+---
+
+#### 12.2 — Closures
+
+**Concept:** Returning an **object of functions** instead of a single function gives several methods that all close over the *same* private variable — the standard way to expose a controlled API over hidden state.
+
+**Why:** The counter's `count` cannot be set to `-999` from outside; the only way to change it is through `increment()` / `decrement()`, which is exactly the encapsulation a class would give you, with less ceremony.
+
+**Q&A — why use this?**
+- **Q: Do the returned methods share state?** A: Yes — all three close over the same `count` from one `makeCounter()` call. Calling `makeCounter()` again produces a completely separate `count`.
+- **Q: How do I read the private value?** A: Only through a getter you chose to expose (`get()`). There is no `counter.count` — the variable is not a property, it lives in the closure.
+- **Q: What's the gotcha?** A: `increment()` alone is not callable — the methods only exist on the returned object, so it must be `counter.increment()`. Default parameters (`makeCounter(start = 0)`) set the initial private value.
+
+```mermaid
+flowchart TD
+    M["makeCounter&#40;0&#41;"] --> P["private: let count = 0"]
+    P --> O["returns { increment, decrement, get }"]
+    O --> A["increment&#40;&#41; → count++"]
+    O --> B["decrement&#40;&#41; → count--"]
+    O --> C["get&#40;&#41; → count"]
+    A --> P
+    B --> P
+    C --> P
+```
+
+```js
+function makeCounter(start = 0) {
+    let count = start;                       // private — no outside access
+    return {
+        increment() { count++; },
+        decrement() { count--; },
+        get()       { return count; }
+    };
+}
+
+let counter = makeCounter(0);
+counter.increment();
+counter.increment();
+counter.increment();
+console.log(counter.get());   // 3
+counter.decrement();
+console.log(counter.get());   // 2
+
+console.log(counter.count);   // undefined — count is not a property
+// increment();               // ReferenceError — only on the returned object
+
+let other = makeCounter(10);  // brand-new, independent count
+console.log(other.get());     // 10
+```
+
+---
+
+#### 12.3 — Closures in Real Test Code
+
+**Concept:** Two automation staples built on one closure each: a retry tracker that counts attempts per test run, and a rate limiter that returns `true` until a call budget is used up.
+
+**Why:** Both need a number that persists across calls but must not be a global anyone can reset — the exact problem closures solve.
+
+**Q&A — why use this?**
+- **Q: Why not a module-level `let attempts = 0`?** A: Every test file importing it would share (and stomp on) the same counter. `maxRetryTRacker(3)` hands each caller its own isolated count.
+- **Q: How do I reset the count?** A: You don't — you make a new one. Call the factory again for a fresh tracker; that is the intended reset.
+- **Q: What's the gotcha?** A: The counter increments on *every* call regardless of test name, so passing a different `testName` does not give a separate count. One tracker per test, or key the count by name inside the closure.
+
+```mermaid
+flowchart LR
+    F["maxRetryTRacker&#40;3&#41;"] --> C["private: attempts = 0"]
+    C --> T["returns tryAgain&#40;testName&#41;"]
+    T --> I["attempts++"]
+    I --> Q{"attempts &gt; max?"}
+    Q -->|no| A["'Attempt n/3 for Login'"]
+    Q -->|yes| E["'Login exceeded max retries &#40;3&#41;'"]
+```
+
+```js
+function maxRetryTRacker(max) {
+    let attempts = 0;                        // private, survives between calls
+    function tryAgain(testName) {
+        attempts++;
+        if (attempts > max) {
+            return `${testName} exceeded max retries (${max})`;
+        }
+        return `Attempt ${attempts}/${max} for ${testName}`;
+    }
+    return tryAgain;
+}
+
+let runTCRetry = maxRetryTRacker(3);
+console.log(runTCRetry("Login"));   // Attempt 1/3 for Login
+console.log(runTCRetry("Login"));   // Attempt 2/3 for Login
+console.log(runTCRetry("Login"));   // Attempt 3/3 for Login
+console.log(runTCRetry("Login"));   // Login exceeded max retries (3)
+
+// Same shape, boolean answer — a rate limiter
+function makeRateLimiter(limit) {
+    let call = 0;
+    return function check() {
+        call++;
+        return call <= limit;
+    };
+}
+
+let limiter = makeRateLimiter(3);
+console.log(limiter(), limiter(), limiter(), limiter()); // true true true false
+```
+
+---
+
+### 13 — Strings
+
+**Concept:** A string is an ordered, **immutable** sequence of characters. It can be written with single quotes, double quotes, or backticks — and only backticks (template literals) support `${...}` interpolation and real multiline text.
+
+**Why:** URLs, selectors, assertion messages, and API payloads are all strings, so choosing the right quote style and knowing that every "modifying" method returns a *new* string is day-one automation knowledge.
+
+**Q&A — why use this?**
+- **Q: When do I reach for backticks?** A: Any time a variable or expression goes inside the text (`` `Test completed in ${ms}ms` ``) or the string spans lines. Plain quotes for fixed literals.
+- **Q: What does `String(x)` do to non-strings?** A: Converts anything: `String(200)` → `"200"`, `String(true)` → `"true"`, `String(null)` → `"null"`, `String([1,2])` → `"1,2"` (array `join`, not JSON — so `[1,2]` becomes `"1,2"`, not `"[1,2]"`).
+- **Q: What's the gotcha?** A: Strings are immutable. `str[0] = "h"` silently does nothing. Every method (`toUpperCase`, `slice`, `replace`) returns a new string — assign the result or it is lost.
+
+```mermaid
+flowchart TD
+    Q{"Which quote?"} -->|"fixed text"| S["'single' or &quot;double&quot; — interchangeable"]
+    Q -->|"needs a variable"| T["`backtick ${expr}`"]
+    Q -->|"spans lines"| T
+    S --> I["immutable — methods return NEW strings"]
+    T --> I
+```
+
+```js
+let url     = "https://app.vwo.com";
+let status  = 'pass';
+let message = `Test completed in ${320}ms`;
+
+// Template literal — interpolation + expressions
+let name1 = "Alice";
+console.log(`Hello, ${name1}! 2 + 2 = ${2 + 2}`);  // Hello, Alice! 2 + 2 = 4
+
+// Multiline — only backticks keep the line breaks
+let report = `
+  Test: Login
+  Status: Pass
+  Duration: 320ms
+`;
+
+// Converting anything to a string
+console.log(String(200));     // "200"
+console.log(String(true));    // "true"
+console.log(String(null));    // "null"
+console.log(String([1, 2]));  // "1,2"  — joined, not JSON
+
+// Escapes: \n newline, \" literal quote
+console.log("line one\nline two");
+console.log('he said "hi"');
+```
+
+---
+
+#### 13.1 — Properties & Character Access
+
+**Concept:** `.length` counts characters (1-based count, 0-based indexes). Read one character with brackets `str[0]`, `charAt(0)`, or `.at(0)` — and only `.at()` accepts negative indexes counting from the end.
+
+**Why:** Trimming an ID off the end of a URL, checking a last character, or validating length limits all start with index access — and the off-by-one between `.length` and the last index is a permanent trap.
+
+**Q&A — why use this?**
+- **Q: What is the last index?** A: `str.length - 1`. For `"Hello, World!"` the length is `13` and the last index is `12`, which is why `.at(-1)` exists.
+- **Q: `str[0]` or `charAt(0)`?** A: Same result for valid indexes. They differ out of range — `str[99]` gives `undefined`, `str.charAt(99)` gives `""`. Neither accepts negatives; use `.at(-1)`.
+- **Q: What's the gotcha?** A: `charCodeAt(0)` returns the **numeric** character code, not the character — `"Hello".charCodeAt(0)` is `72` (ASCII `H`), useful for sorting and encoding checks.
+
+```mermaid
+flowchart LR
+    A["'Hello, World!' — length 13"] --> B["str[0] → 'H' &#40;index 0&#41;"]
+    A --> C["str[7] → 'W'"]
+    A --> D["str.at&#40;-1&#41; → '!' &#40;last&#41;"]
+    A --> E["str.charCodeAt&#40;0&#41; → 72 &#40;code, not char&#41;"]
+    A --> F["str[99] → undefined | charAt&#40;99&#41; → ''"]
+```
+
+```js
+let str = "Hello, World!";
+
+console.log(str.length);        // 13  — count, so last index is 12
+console.log(str[0]);            // "H"
+console.log(str[7]);            // "W"
+console.log(str.at(-1));        // "!"  last character
+console.log(str.at(-6));        // "W"  sixth from the end
+
+console.log(str.charAt(0));     // "H"
+console.log(str.charCodeAt(0)); // 72   ASCII code of "H"
+
+console.log(str[99]);           // undefined
+console.log(str.charAt(99));    // ""   empty string, not undefined
+
+// Immutable — this silently does nothing
+str[0] = "J";
+console.log(str);               // "Hello, World!"
+```
+
+| Access | Negative index? | Out of range |
+|--------|:---------------:|--------------|
+| `str[i]` | No | `undefined` |
+| `str.charAt(i)` | No | `""` |
+| `str.at(i)` | Yes | `undefined` |
+
+---
+
+#### 13.2 — Searching & Checking
+
+**Concept:** `includes` / `startsWith` / `endsWith` answer **yes or no**. `indexOf` / `lastIndexOf` answer **where**, returning a position or `-1` when there is no match.
+
+**Why:** Environment guards (`url.includes("staging")`), protocol checks (`startsWith("https")`), and pulling a query string out of a URL are all one of these five calls.
+
+**Q&A — why use this?**
+- **Q: Boolean or position?** A: If the answer feeds an `if`, use `includes`/`startsWith`/`endsWith` — they read as English. Use `indexOf` only when the index itself is needed, e.g. to `slice` from it.
+- **Q: What does `indexOf` return when nothing matches?** A: `-1`, never `undefined`. That is why the old `indexOf(x) !== -1` idiom exists — `includes` replaced it and is clearer.
+- **Q: What's the gotcha?** A: All of them are **case-sensitive**. `url.startsWith("http://")` is `false` for an `https` URL, and `"Staging"` will not match `"staging"` — lowercase both sides first when the case is not guaranteed.
+
+```mermaid
+flowchart TD
+    U["url = 'https://staging.vwo.com/api/login?retry=true'"] --> B{"Need yes/no or position?"}
+    B -->|yes/no| Y["includes / startsWith / endsWith → true | false"]
+    B -->|position| P["indexOf / lastIndexOf → number or -1"]
+    Y --> C["case-sensitive ⚠️"]
+    P --> C
+```
+
+```js
+let url = "https://staging.vwo.com/api/login?retry=true";
+
+// Boolean checks
+console.log(url.includes("staging"));      // true
+console.log(url.includes("production"));   // false
+console.log(url.startsWith("https"));      // true
+console.log(url.startsWith("http://"));    // false — case/exact sensitive
+console.log(url.endsWith("true"));         // true
+
+// Position checks — -1 means "not found"
+console.log(url.indexOf("a"));             // 10   first "a" (in "staging")
+console.log(url.lastIndexOf("a"));         // 24   last "a" (in "/api/")
+console.log(url.indexOf("nothere"));       // -1
+
+// Real use — environment guard
+if (url.includes("staging")) {
+    console.log("Running against staging, skipping payment tests");
+}
+```
+
+| Method | Returns | Use for |
+|--------|---------|---------|
+| `includes(x)` | `true` / `false` | Anywhere in the string |
+| `startsWith(x)` | `true` / `false` | Protocol, prefix |
+| `endsWith(x)` | `true` / `false` | Extension, suffix |
+| `indexOf(x)` | index or `-1` | First position |
+| `lastIndexOf(x)` | index or `-1` | Last position |
+
+---
+
+#### 13.3 — Extracting Substrings
+
+**Concept:** `slice(start, end)` and `substring(start, end)` extract part of a string without changing the original. The `end` index is excluded; `slice` supports negative indexes, while `substring` treats negative values as `0`.
+
+**Why:** Test names, generated IDs, URLs, and filenames often contain multiple pieces of information inside one string. Extraction lets a test isolate the exact part it needs.
+
+**Q&A — why use this?**
+- **Q: Which method should I prefer?** A: Use `slice` for predictable start/end behavior and negative indexes.
+- **Q: How do I take the last three characters?** A: `str.slice(-3)`.
+- **Q: Is the end index included?** A: No. `slice(0, 5)` reads indexes `0` through `4`.
+- **Q: What is `.at()` for?** A: Reading one character, including from the end with a negative index such as `.at(-1)`.
+
+```js
+let str = "Login_Test_Pass_001";
+
+console.log(str.slice(0, 5));  // "Login"
+console.log(str.slice(11));    // "Pass_001"
+console.log(str.slice(-3));    // "001"
+
+console.log(str.substring(6, 10)); // "Test"
+console.log(str.at(0));             // "L"
+console.log(str.at(-1));            // "1"
+```
+
+| Method | Negative indexes | End index | Best use |
+|--------|:----------------:|:---------:|----------|
+| `slice(start, end)` | Yes | Excluded | General substring extraction |
+| `substring(start, end)` | No; clamps to `0` | Excluded | Legacy/simple non-negative ranges |
+| `at(index)` | Yes | N/A | One character |
+
+---
+
+#### 13.4 — Case, Whitespace, Replacement & Concatenation
+
+**Concept:** Case and whitespace methods normalize text; replacement methods create edited copies; concatenation combines multiple strings. None of these mutate the original string.
+
+**Why:** UI text often contains inconsistent case or extra spaces, and assertion messages frequently need values inserted or sensitive text replaced before logging.
+
+**Q&A — why use this?**
+- **Q: Does `replace("FAIL", "PASS")` replace every match?** A: No, only the first. Use `replaceAll` or a global regular expression (`/FAIL/g`) for all matches.
+- **Q: Does `trim()` remove spaces inside the string?** A: No, only whitespace at both ends. `trimStart` and `trimEnd` handle one side.
+- **Q: What is the clearest way to combine values?** A: Template literals are usually best when variables or expressions are involved.
+
+```js
+let text = "  Hello, World!  ";
+
+console.log(text.toUpperCase()); // "  HELLO, WORLD!  "
+console.log(text.toLowerCase()); // "  hello, world!  "
+console.log(text.trim());        // "Hello, World!"
+
+let result = "Test: FAIL. Retry: FAIL.";
+console.log(result.replace("FAIL", "PASS"));    // first match only
+console.log(result.replaceAll("FAIL", "PASS")); // every match
+console.log(result.replace(/FAIL/g, "PASS"));    // every match with regex
+
+let greeting = `${"Hello"} ${"World"}`;
+console.log(greeting); // "Hello World"
+```
+
+---
+
+#### 13.5 — Splitting, Joining & Conversion
+
+**Concept:** `split` turns a string into an array; `join` turns an array into a string. `String` and `.toString()` convert values to text, while `Number`, `parseInt`, and `parseFloat` convert suitable text to numbers.
+
+**Why:** Test data commonly arrives as CSV-like text, URL segments, labels, or environment variables. Splitting and conversion turn that raw text into values the test can process.
+
+**Q&A — why use this?**
+- **Q: What does `"pass,fail".split(",")` return?** A: `["pass", "fail"]`, an array of two strings.
+- **Q: `Number("42px")` or `parseInt("42px", 10)`?** A: `Number` is strict and returns `NaN`; `parseInt` reads the leading integer and returns `42`.
+- **Q: Can I change one character with `str[0] = "H"`?** A: No. Strings are immutable; create and assign a new string instead.
+
+```js
+console.log("pass,fail,skip".split(",")); // ["pass", "fail", "skip"]
+console.log("hello".split(""));          // ["h", "e", "l", "l", "o"]
+
+let parts = ["2024", "03", "07"];
+console.log(parts.join("-"));            // "2024-03-07"
+
+console.log(String(200));                 // "200"
+console.log((200).toString());            // "200"
+console.log(Number("42"));               // 42
+console.log(parseInt("42px", 10));       // 42
+console.log(parseFloat("3.14rem"));       // 3.14
+
+let word = "hello";
+word[0] = "H";
+console.log(word);                        // "hello" — unchanged
+```
+
+---
+
+#### 13.6 — Complete String Cheatsheet
+
+[`13_String/String_Cheatsheet.md`](13_String/String_Cheatsheet.md) is the full SDET-focused reference for string properties and methods. It covers character access, searching, extraction, splitting, Unicode-safe handling, case and whitespace, padding, replacement, comparison, templates, conversion, and practical test-automation recipes.
+
+Use the lesson files for focused examples and the cheatsheet when you need to compare methods or review a gotcha quickly.
+
+---
+
+### 14 — Objects
+
+**Concept:** An object groups related values under named keys. Values can be primitives, arrays, nested objects, or functions (methods), which makes objects the natural shape for users, test data, API responses, and configuration.
+
+**Why:** Modern JavaScript automation is object-heavy: Playwright options, fixtures, page data, API payloads, and assertion results are all commonly represented as objects.
+
+**Q&A — why use this?**
+- **Q: Are object keys case-sensitive?** A: Yes. `status` and `Status` are different keys.
+- **Q: Are two identical-looking objects equal?** A: Not unless both variables point to the same object. `{ status: "pass" } === { status: "pass" }` is `false`.
+- **Q: Is an object literal with quoted keys JSON?** A: No. It is still a JavaScript object. JSON is a text format produced or read with `JSON.stringify` and `JSON.parse`.
+
+```js
+const test = {
+    name: "Login",
+    status: "pass",
+    retries: 2,
+    tags: ["smoke", "auth"]
+};
+
+console.log(test.name);      // "Login"
+console.log(test["status"]); // "pass"
+```
+
+---
+
+#### 14.1 — Property Access & Mutation
+
+**Concept:** Read known property names with dot notation and dynamic names with bracket notation. Objects are mutable, so properties can be added, updated, or deleted after creation—even when the variable itself was declared with `const`.
+
+**Why:** Runtime configuration and test data often start small and gain values such as a selected browser, timeout, token, or result during execution.
+
+**Q&A — why use this?**
+- **Q: Dot or bracket notation?** A: Use dots for fixed valid identifiers (`user.name`) and brackets for dynamic keys or names containing spaces (`user[key]`).
+- **Q: Can a `const` object change?** A: Its binding cannot point to another object, but its properties can still change.
+- **Q: What does `delete` do?** A: Removes a property from the object.
+
+```js
+const config = {};
+
+config.browser = "Chrome";       // add
+config.timeout = 3000;           // add
+config.timeout = 5000;           // update
+console.log(config["timeout"]);  // 5000
+
+delete config.browser;           // remove
+console.log(config);             // { timeout: 5000 }
+```
+
+---
+
+#### 14.2 — Nested Objects & Methods
+
+**Concept:** Objects can contain other objects and arrays to model structured data. A method is a function stored on an object; inside a regular method, `this` refers to the object used to call it.
+
+**Why:** A realistic user or API response is rarely flat. Nesting keeps related data together, while methods can derive useful values such as a display name or formatted address.
+
+**Q&A — why use this?**
+- **Q: How do I reach a nested value?** A: Chain property access, for example `user.address.city`.
+- **Q: How does a method read another property?** A: Use `this`, as in `return this.name`.
+- **Q: Can an object hold arrays of objects?** A: Yes; this is a common shape for API collections and histories.
+
+```js
+const user = {
+    name: "Pramod",
+    address: {
+        city: "Bengaluru",
+        country: "India"
+    },
+    skills: ["JavaScript", "Playwright", "API Testing"],
+    printName() {
+        return this.name;
+    }
+};
+
+console.log(user.address.city); // "Bengaluru"
+console.log(user.skills[1]);    // "Playwright"
+console.log(user.printName());  // "Pramod"
+```
+
+---
+
+#### 14.3 — Value vs Reference
+
+**Concept:** Assigning a primitive copies its value, so changing the second variable does not affect the first. Assigning an object copies the reference value, so both variables point to the same object and observe the same mutations.
+
+**Why:** Shared references can cause surprising test pollution when one test updates configuration or fixture data that another test also uses.
+
+**Q&A — why use this?**
+- **Q: Does JavaScript pass objects "by reference"?** A: JavaScript passes everything by value; for objects, that value is a reference to the object.
+- **Q: Why is `{} === {}` false?** A: Each literal creates a different object at a different identity.
+- **Q: How do I avoid shared top-level mutations?** A: Make a shallow copy with `{ ...original }`; nested objects still need deliberate deep copying when they will also be changed.
+
+```js
+let firstNumber = 10;
+let secondNumber = firstNumber;
+secondNumber = 99;
+console.log(firstNumber); // 10 — independent primitive value
+
+let firstObject = { value: 10 };
+let secondObject = firstObject;
+secondObject.value = 99;
+console.log(firstObject.value); // 99 — same object
+
+let left = { status: "pass" };
+let right = { status: "pass" };
+console.log(left === right);    // false — different objects
+```
+
+---
+
+### 15 — Multi-Dimensional Arrays
+
+**Concept:** A multi-dimensional array is an array whose elements are themselves arrays, most commonly a 2D array that reads like a table of rows and columns. You reach a cell with two indexes — `grid[row][column]`.
+
+**Why:** Real test data is naturally tabular: a matrix of test results, a grid of students and scores, or an HTML table flattened into rows of cells. Nested loops are the standard way to walk every cell.
+
+**Q&A — why use this?**
+- **Q: What is the shape of a 2D array?** A: An outer array of rows, where each row is itself an array. `matrix[0]` is the first row, `matrix[0][1]` is its second cell.
+- **Q: How do I visit every cell?** A: A `for` loop for rows, and inside it a `for` loop for columns — `grid[i][j]`.
+- **Q: Does each row need the same length?** A: No. JavaScript does not enforce rectangular shape; ragged arrays are legal but often buggy when you assume equal length.
+
+```js
+let matrix = [
+    [1, 2, 3],
+    [4, 5, 6],
+    [7, 8, 9]
+];
+
+console.log(matrix[1][2]); // 6 — row 1, column 2
+
+for (let i = 0; i < 3; i++) {
+    for (let j = 0; j < 3; j++) {
+        process.stdout.write(matrix[i][j] + " ");
+    }
+    console.log(""); // newline after each row
+}
+```
+
+```mermaid
+flowchart TD
+    A[2D array = array of arrays] --> B[Outer loop: rows]
+    B --> C[Inner loop: columns]
+    C --> D["matrix[row][col]"]
+    D --> E[Process cell]
+```
+
+---
+
+#### 15.1 — Star Patterns
+
+**Concept:** Star patterns are a warm-up for nested loops. The outer loop controls the number of lines, and one or more inner loops control spaces and stars on each line to build right triangles, inverted triangles, and centered pyramids.
+
+**Why:** These exercises train the exact loop-and-index thinking needed to walk 2D arrays and generate test fixtures. A pyramid in particular forces you to reason about both leading spaces and an odd star count per row.
+
+**Q&A — why use this?**
+- **Q: How do I print without a trailing newline?** A: Use `process.stdout.write("*")` for stars and `console.log("")` only at the end of each row.
+- **Q: Why does the pyramid use `2 * i - 1` stars?** A: Row 1 needs 1 star, row 2 needs 3, row 3 needs 5 — an odd-number sequence, which `2*i - 1` generates.
+- **Q: How do I center a row?** A: Pad the left with `n - i` spaces before printing the `2*i - 1` stars.
+
+```js
+let n = 3;
+for (let i = 1; i <= n; i++) {
+    let row = "";
+    for (let j = 1; j <= n - i; j++) row += " "; // leading spaces
+    for (let j = 1; j <= 2 * i - 1; j++) row += "*"; // stars
+    console.log(row);
+}
+//   *
+//  ***
+// *****
+```
+
+---
+
+### 16 — Callbacks
+
+**Concept:** A callback is a function you pass as an argument to another function, so the receiver can "call you back" later. JavaScript lets you pass it three ways: a named function, an anonymous function, or an arrow function — all equivalent.
+
+**Why:** Callbacks are how JavaScript signals "this finished" without blocking the thread. They are the foundation of asynchronous code and the first version of how test runners and APIs hand results back to your code.
+
+**Q&A — why use this?**
+- **Q: When is a callback called?** A: Whenever the receiving function decides — immediately (sync) or after some work finishes (async), such as a timer or network response.
+- **Q: Are the three ways to pass it different?** A: Behaviorally no; named, anonymous, and arrow all produce a function. The arrow is shortest and does not rebind `this`.
+- **Q: What is the "error-first" convention?** A: A Node-style callback takes `(error, result)`; you check `error` first and `return` early if it exists.
+
+```js
+function placeOrder(item, callback) {
+    console.log("Order placed:", item);
+    callback(); // call back later
+}
+
+// Named
+function print() { console.log("Done with the order"); }
+placeOrder("Burger", print);
+
+// Anonymous
+placeOrder("Burger", function () {
+    console.log("Order is ready, pick it up!");
+});
+
+// Arrow
+placeOrder("Burger", () => console.log("Arrow fn — no name"));
+```
+
+```mermaid
+flowchart LR
+    A[Call placeOrder] --> B["Runs body, calls callback()"]
+    B --> C[Callback executes]
+    C --> D["Control returns to placeOrder"]
+```
+
+---
+
+#### 16.1 — Sync vs Async Callbacks
+
+**Concept:** A synchronous callback runs immediately, inside the current call stack, before the next line. An asynchronous callback (like `setTimeout`) is handed to the browser/Node event loop and runs only after the current synchronous code finishes.
+
+**Why:** Knowing the difference explains a classic automation trap — a line that logs "all done" prints *before* an asynchronous API response arrives, so you cannot rely on the order you read the code.
+
+**Q&A — why use this?**
+- **Q: Which is synchronous here?** A: `Array.forEach(callback)` — it iterates all items and finishes before moving on.
+- **Q: Which is asynchronous?** A: `setTimeout(callback, ms)` — it registers the callback and returns immediately; the callback runs later.
+- **Q: What is the gotcha?** A: Code after an async call does not wait for it. "Moving to next" logs before "API response received".
+
+```js
+console.log("Test 1: started");
+
+setTimeout(function () {
+    console.log("Test 2: API response received!"); // runs LAST
+}, 5000);
+
+console.log("Test 3: moving to next"); // runs before the timeout fires
+```
+
+---
+
+#### 16.2 — Callback Hell
+
+**Concept:** When each async step is nested inside the previous step's callback, the code indents further right with every step — a staircase of `})` closers that is hard to read, maintain, and error-check.
+
+**Why:** A real E2E flow (open browser → go to login → enter credentials → click login) chains several steps. Nesting them as callbacks produces the "pyramid of doom", which is the exact problem Promises and async/await were invented to solve.
+
+**Q&A — why use this?**
+- **Q: What does callback hell look like?** A: Each step's callback wraps the next, so the deepest code is indented many levels and ends in a wall of `})`.
+- **Q: Why is it a problem for testers?** A: Adding error handling to each level multiplies the noise, and tracing which level failed is painful.
+- **Q: What replaces it?** A: Promises flatten the nesting into a chain, and async/await makes it read like straight-line code.
+
+```js
+openBrowser(function () {
+    goToLoginPage(function () {
+        enterCredentials(function () {
+            clickLogin(function () {
+                console.log("Test is Complete!"); // deeply nested
+            });
+        });
+    });
+});
+```
+
+```mermaid
+flowchart TD
+    A[openBrowser] --> B[goToLoginPage]
+    B --> C[enterCredentials]
+    C --> D[clickLogin]
+    D --> E[Complete]
+    style A fill:#fff4e6,stroke:#d48a00
+    style E fill:#e6f4ea,stroke:#1a7f37
+```
+
+---
+
+### 17 — Promises
+
+**Concept:** A Promise is an object representing the eventual result of an async operation. It starts *pending* and settles once — either *fulfilled* (resolved) with a value or *rejected* with an error — and handlers react to whichever state it reaches.
+
+**Why:** Promises replace callback nesting with a flat chain, give a single place to catch errors (`.catch`), and come with combinators (`Promise.all`, `allSettled`, `race`) that mirror real test-orchestration needs.
+
+**Q&A — why use this?**
+- **Q: What are the three states?** A: `pending` (in flight), `fulfilled` (resolved), and `rejected` (failed). A promise settles exactly once.
+- **Q: How do I build one?** A: `new Promise((resolve, reject) => { ... })` — call `resolve(value)` on success or `reject(error)` on failure.
+- **Q: How do I consume one?** A: `.then(success)` for the fulfilled value, `.catch(error)` for rejection, and `.finally(cleanup)` that runs either way.
+
+```js
+let order = new Promise(function (resolve, reject) {
+    let foodReady = false;
+    if (foodReady) resolve("Pizza is delivered!");
+    else reject("Order cancelled");
+});
+
+order
+    .then(function (msg) { console.log("Success:", msg); })
+    .catch(function (err) { console.log("Failed:", err); })
+    .finally(function () { console.log("Cleanup"); });
+```
+
+```mermaid
+flowchart TD
+    P[new Promise] --> Q{Operation}
+    Q -->|success| R[resolve → fulfilled]
+    Q -->|failure| J[reject → rejected]
+    R --> T[.then]
+    J --> C[.catch]
+    T --> F[.finally]
+    C --> F
+```
+
+---
+
+#### 17.1 — then / catch / finally
+
+**Concept:** `.then` handles a fulfilled promise, `.catch` handles a rejected one, and `.finally` runs cleanup in both cases. When a promise rejects, its `.then` is skipped entirely and control jumps straight to `.catch`.
+
+**Why:** These three methods map one-to-one to test assertions: run the action (`.then`), handle the failure (`.catch`), and always clean up state like a browser or a fixture (`.finally`).
+
+**Q&A — why use this?**
+- **Q: Does `.then` run on rejection?** A: No. A rejected promise skips `.then` and goes to the next `.catch`.
+- **Q: Does `.finally` receive the value or error?** A: No. It takes no argument and cannot change the outcome; it just runs.
+- **Q: Can I chain `.finally` after `.catch`?** A: Yes — `.then().catch().finally()` is the standard shape.
+
+```js
+let apiCall = new Promise(function (resolve, reject) {
+    reject("500 Error");
+});
+
+apiCall
+    .then(function (data) { console.log("Data is success!!"); }) // skipped
+    .catch(function (error) { console.log(error); });             // "500 Error"
+```
+
+---
+
+#### 17.2 — Chaining Promises
+
+**Concept:** Returning a new promise from inside a `.then` lets the next `.then` wait for it, producing a flat sequence of steps. Each step's message flows to the next, and a single `.catch` at the end handles a failure anywhere in the chain.
+
+**Why:** This is the promise version of a multi-step E2E flow — the same login sequence that callback hell nested four levels deep becomes four flat `.then` calls, far easier to read and extend.
+
+**Q&A — why use this?**
+- **Q: What makes chaining work?** A: Each `.then` returns a promise; if its callback returns a promise, the next `.then` waits for it.
+- **Q: Where does one error handler go?** A: A single `.catch` at the end of the chain catches a rejection from any earlier step.
+- **Q: What does the final `.finally` do?** A: Runs once the chain settles, for teardown like closing the browser.
+
+```js
+openBrowser()
+    .then(function (msg) { console.log("Step 1:", msg); return goToLogin(); })
+    .then(function (msg) { console.log("Step 2:", msg); return enterCredentials(); })
+    .then(function (msg) { console.log("Step 3:", msg); return clickLogin(); })
+    .then(function (msg) { console.log("Step 4:", msg); })
+    .catch(function (error) { console.log("Error:", error); })
+    .finally(function () { console.log("Done execution!"); });
+```
+
+---
+
+#### 17.3 — all / allSettled / race
+
+**Concept:** `Promise.all` resolves only if *every* promise fulfills, or rejects on the first failure. `Promise.allSettled` waits for *all* to settle and reports each outcome. `Promise.race` settles with whichever promise settles first.
+
+**Why:** These three are the QA toolkit for running groups of checks: `all` for "all must pass", `allSettled` for "give me a full report even with failures", and `race` for "use the fastest server/response".
+
+**Q&A — why use this?**
+- **Q: Which stops at the first failure?** A: `Promise.all` rejects immediately on the first rejection; `allSettled` never short-circuits.
+- **Q: What does `allSettled` return?** A: An array of `{ status: "fulfilled"|"rejected", value|reason }` — one entry per input, in order.
+- **Q: When is `race` useful?** A: Timeouts and failover — respond to whichever server or operation completes first.
+
+```js
+Promise.all([
+    Promise.resolve("OK"),
+    Promise.reject("DB DOWN"),
+    Promise.resolve("OK")
+])
+    .then(function (r) { console.log(r); })
+    .catch(function (err) { console.log("Failed:", err); }); // "Failed: DB DOWN"
+
+Promise.allSettled([
+    Promise.resolve("Test A Passed!"),
+    Promise.reject("Test B failed"),
+    Promise.resolve("Test C passed")
+]).then(function (results) {
+    results.forEach(function (r, i) {
+        console.log("Test " + (i + 1) + ":", r.status, "-", r.value || r.reason);
+    });
+});
+```
+
+| Method | Settles when | Fails on first rejection? |
+|:-------|:-------------|:-------------------------:|
+| `Promise.all` | all fulfill | Yes |
+| `Promise.allSettled` | all settle | No |
+| `Promise.race` | first settles | Only if that one rejects |
+
+---
+
+### 18 — Async / Await
+
+**Concept:** `async` marks a function that returns a promise; inside it, `await` pauses the function until a promise settles and yields its resolved value. The result reads like ordinary top-to-bottom code instead of a chain of `.then` callbacks.
+
+**Why:** Async/await is the modern replacement for promise chains — the same login flow becomes straight-line statements with `await`, which is far easier to read, debug, and wrap in a `try/catch`.
+
+**Q&A — why use this?**
+- **Q: What does `async` guarantee?** A: The function always returns a promise, even if it returns a plain value.
+- **Q: What does `await` require?** A: It can only be used inside an `async` function, and it waits for the promise on its right.
+- **Q: How do I handle errors?** A: Wrap the awaited calls in `try/catch`, or call the async function and attach `.catch` to its returned promise.
+
+```js
+async function runLoginFlow() {
+    let msg1 = await openBrowser();
+    console.log("Step 1:", msg1);
+
+    let msg2 = await goToLogin();
+    console.log("Step 2:", msg2);
+
+    let msg3 = await enterCredentials();
+    console.log("Step 3:", msg3);
+
+    let msg4 = await clickLogin();
+    console.log("Step 4:", msg4);
+}
+
+runLoginFlow();
+```
+
+```mermaid
+flowchart TD
+    A[async function] --> B["await openBrowser()"]
+    B --> C["await goToLogin()"]
+    C --> D["await enterCredentials()"]
+    D --> E["await clickLogin()"]
+    E --> F[Return promise]
+```
+
+---
+
 ## MCQ — Practice Questions
 
 **Concept:** [`MCQ/Array_MCQ.md`](MCQ/Array_MCQ.md) is a growing bank of short multiple-choice questions to self-test the concepts from each chapter, starting with arrays.
@@ -1365,4 +2648,4 @@ Concept explainers, generated on demand via the prompt template in [`IQ_Notes/RE
 
 ---
 
-> **TL;DR:** This repo is a from-scratch JavaScript fundamentals course (`console.log` → scoping → identifiers → literals/numbers → operators → conditionals → switch statements → user input → loops → arrays: create, search, iterate, transform, sort, slice, combine, check, copy, destructure → functions: the four types, expressions, arrows, IIFE) plus a `00_chaptet_GENAI` folder for LLM automation-framework prompting, an `MCQ` self-test bank, and an `IQ_Notes` library of standalone concept references anyone can regenerate with the same prompt template.
+> **TL;DR:** This repo is a from-scratch JavaScript fundamentals course (`console.log` → scoping → identifiers → literals/numbers → operators → conditionals → switch statements → user input → loops → arrays: create, search, iterate, transform, sort, slice, combine, check, copy, destructure → functions: the four types, expressions, arrows, IIFE, spread/rest, `return`, `var`/`let`/`const`, hoisting, TDZ → scope & closures: scope chain, private state, retry trackers → strings: quotes, template literals, character access, searching, extraction, transformation, splitting, joining, conversion → objects: literals, property access, mutation, nesting, methods, value vs reference) plus a `00_chaptet_GENAI` folder for LLM automation-framework prompting, an `MCQ` self-test bank, and an `IQ_Notes` library of standalone concept references anyone can regenerate with the same prompt template.
