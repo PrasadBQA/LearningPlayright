@@ -4,9 +4,39 @@ A learning repository tracking JavaScript fundamentals from first principles, al
 
 ---
 
+## Getting Started
+
+**Requirements:** Node.js 18+ (check with `node -v`). No dependencies are needed for the plain `.js` lessons.
+
+```bash
+# Clone and run any lesson directly
+git clone <repo-url> && cd LearnPlaywright3x
+node 01_chapter_Javascript/01_HelloWorld.js
+```
+
+Most chapters are dependency-free JavaScript. Run any lesson with:
+
+```bash
+node path/to/file.js
+```
+
+The one exception is `18_Async_Await/149_Example.spec.ts`, a Playwright test. It needs the Playwright toolchain:
+
+```bash
+npm init playwright@latest   # once per machine/project
+npx playwright install       # downloads browsers
+npx playwright test 18_Async_Await/149_Example.spec.ts
+```
+
+**How to use this repo:** read a chapter's Concept section → open its lesson files → predict each output before running → verify with `node` → close gaps with the linked IQ notes and MCQs.
+
+---
+
 ## Table of Contents
 
+- [Getting Started](#getting-started)
 - [Repo Structure](#repo-structure)
+- [Repeatable “Go Go Go” Command](#repeatable-go-go-go-command)
 - [00 — GenAI / RICE Prompting](#00--genai--rice-prompting)
 - [01 — Hello World](#01--hello-world)
 - [02 — `let` & Scope](#02--let--scope)
@@ -17,7 +47,7 @@ A learning repository tracking JavaScript fundamentals from first principles, al
   - [05.2 — Ternary (Conditional) Operator](#052--ternary-conditional-operator)
   - [05.3 — Nested Ternary](#053--nested-ternary)
   - [05.4 — Type Operators (`typeof`)](#054--type-operators-typeof)
-  - [05.5 — Increment and Decrement Operators](#055--increment-and-decrement-operators)
+  - [05.5 Increment and Decrement Operators](#055-increment-and-decrement-operators)
   - [05.6 Nullish Coalescing Operator](#056-nullish-coalescing-operator)
 - [06 Statements and Conditionals](#06-statements-and-conditionals)
 - [07 Switch Statements](#07-switch-statements)
@@ -41,6 +71,7 @@ A learning repository tracking JavaScript fundamentals from first principles, al
   - [11.7 — Hoisting](#117--hoisting)
   - [11.8 — Temporal Dead Zone (TDZ)](#118--temporal-dead-zone-tdz)
   - [11.9 — Hoisting Trap: Declaration vs Expression](#119--hoisting-trap-declaration-vs-expression)
+  - [11.10 — Functions in Real Test Code](#1110--functions-in-real-test-code)
 - [12 — Scope & Closures](#12--scope--closures)
   - [12.1 — Scope Chain](#121--scope-chain)
   - [12.2 — Closures](#122--closures)
@@ -66,7 +97,17 @@ A learning repository tracking JavaScript fundamentals from first principles, al
   - [17.2 — Chaining Promises](#172--chaining-promises)
   - [17.3 — all / allSettled / race](#173--all--allsettled--race)
 - [18 — Async / Await](#18--async--await)
-- [Errors — Common JS Errors](#errors--common-js-errors)
+- [19 — Export / Import (ES Modules)](#19--export--import-es-modules)
+- [20 — Classes & OOP](#20--classes--oop)
+- [21 — OOP Encapsulation](#21--oop-encapsulation)
+- [22 — OOP Inheritance](#22--oop-inheritance)
+  - [22.1 — Single Inheritance](#221--single-inheritance)
+  - [22.2 — Multiple Inheritance & Mixins](#222--multiple-inheritance--mixins)
+  - [22.3 — Multi-Level Inheritance](#223--multi-level-inheritance)
+  - [22.4 — Hierarchical Inheritance](#224--hierarchical-inheritance)
+- [23 — OOP Polymorphism](#23--oop-polymorphism)
+- [24 — OOP Interview Practice](#24--oop-interview-practice)
+- [25 — TypeScript](#25--typescript)
 - [MCQ — Practice Questions](#mcq--practice-questions)
 - [IQ_Notes — Reference Library](#iq_notes--reference-library)
 
@@ -76,26 +117,28 @@ A learning repository tracking JavaScript fundamentals from first principles, al
 
 ```
 LearnPlaywright3x/
-├── 0_Chapter_GENAI/
+├── .commandcode/
+│   └── commands/
+│       └── go-go-go.md                      # repeatable README, verify, commit, and push workflow
+├── 00_chaptet_GENAI/
 │   └── RICEPOT_SeleniumFramworkCreation.md   # RICE-style prompt for Selenium framework gen
-├── 01_Chapter_Basics/
-│   ├── 01_HelloWorld.js                      # console.log basics
-│   └── 02_Let_Concept.js                     # let scoping, hoisting, function declarations
-├── 02_Chapter_JS_Concepts/
-│   └── 02_Let_Concept.js                     # let & scope (JS concepts)
-├── 03_Chapter_Identifiers/
-│   ├── 03_Identifiers_Rules_Part1.js         # valid/invalid identifier characters
-│   ├── 04_Identifiers_Rules_Part2.js         # naming conventions (camelCase, PascalCase, etc.)
+├── 01_chapter_Javascript/
+│   └── 01_HelloWorld.js                      # console.log basics
+├── 02_chapter_Javascript/
+│   └── 02_let_concept.js                     # let scoping, hoisting, function declarations
+├── 03_chapter_Identifier/
+│   ├── 03_Identifer_Rules.js                 # valid/invalid identifier characters
+│   ├── 04_Identifer_Rues_Part2.js            # naming conventions (camelCase, PascalCase, etc.)
 │   ├── 05_Comments.js                        # single-line, multi-line, JSDoc comments
-│   └── 06_Identifier_IQ.js                   # identifier edge cases, Unicode, keywords
-├── 04_Chapter_Literal/
-│   ├── 07_Literals.js                        # literal types + typeof
+│   └── 06_Identifer_IQ.js                    # identifier edge cases, Unicode, keywords
+├── 04_chapter_Literal/
+│   ├── 07_Literal.js                         # literal types + typeof
 │   ├── 08_null_undefined.js                  # null vs undefined deep dive
 │   ├── 09_Null_IQ.js                         # null literal one-liner
 │   ├── 10_Literal.js                         # number literal formats (hex, octal, exponent)
 │   ├── 11_Number.js                          # integer/float/binary/octal/hex literals
 │   └── 12_Number_Part2.js                    # numeric separators, BigInt, Infinity, NaN
-├── 05_Chapter_Operator/
+├── 05_chapter_Operator/
 │   ├── 13_DataType.js                        # the 7 primitive types + array/NaN
 │   ├── 14_Assignment_Operator.js             # =, +=, -=, *=, /=, %=
 │   ├── 15_Arithmetic_Opeartor.js             # + - * / %, ** exponent, odd/even
@@ -120,141 +163,206 @@ LearnPlaywright3x/
 │   ├── 34_Incre_Part2.js                     # post-increment return value vs variable
 │   ├── 35_Decrement.js                       # pre vs post decrement (--a vs a--)
 │   └── 36_Null_Coalescing.js                 # nullish coalescing ?? (null/undefined fallback)
-├── 06_Chapter_Statement/
+├── 06_chapter_Statement/
 │   ├── 37_IQ.js                              # if / else -> age gate
 │   ├── 38_IQ2.js                             # nested if -> drink-age check
 │   └── 38_Multiple_Condition.js              # else-if ladder -> score to grade
-├── 07_Chapter_Switch/
+├── 07_chapter_switch/
 │   ├── 39_Switch.js                          # basic switch statement and break
 │   ├── 40_IQ.js                              # deliberate fall-through example
 │   ├── 41_IQ2.js                             # switch with breaks and default
-│   ├── 42_Real_API_Testing.js                # HTTP status-code branching
+│   ├── 42_REAL_API_Testing.js                # HTTP status-code branching
 │   ├── 43_Switch_Group.js                    # grouped browser cases
-│   ├── 44_IQ3.js                             # string-case fall-through
-│   ├── 45_IQ4.js                             # switch(true) range matching
-│   ├── 46_IQ5.js                             # duplicate case behavior
-│   └── 47_IQ6.js                             # strict case matching
-├── 08_Chapter_User_Inputs/
+│   ├── 44_IQ.js                              # string-case fall-through
+│   ├── 45_IQ2.js                             # switch(true) range matching
+│   ├── 46_IQ3.js                             # duplicate case behavior
+│   └── 47_IQ4.js                             # strict case matching
+├── 08_chapter_UserInputs/
+│   ├── README.md                             # input methods and run instructions
 │   ├── 48_JS.js                              # browser prompt input
 │   ├── 49_Node_UI.js                         # Node.js readline input
-│   ├── 50_Prompt_UI.js                       # prompt-sync package input
-│   ├── 51_FS_UI.js                           # stdin input with fs.readFileSync
-│   └── 51_UI_Conversion.js                   # user input type conversion
-├── 09_Loops/
-│   ├── 52_Loops.js                           # repeated statements without a loop
-│   ├── 55_For_Loop.js                        # for-loop syntax and execution
+│   ├── 50_Prompt.js                          # prompt-sync package input
+│   └── 51_Fs.js                              # stdin input with fs.readFileSync
+├── 09_chapter_Loops/
+│   ├── 52_Loop.js                            # repeated statements without a loop
+│   ├── 53_For_Loop.js                        # for-loop syntax and execution
+│   ├── 54_Increment.js                       # prefix increment review
+│   ├── 55_For_Loops.js                       # inclusive for-loop range
 │   ├── 56_For_Loops2.js                      # conditions inside a for loop
 │   ├── 57_While.js                           # equivalent for and while loops
 │   ├── 58_While.js                           # bounded retry loop
-│   ├── 59_While.js                           # while-loop repetition
+│   ├── 59_Modie.js                           # while-loop repetition
 │   ├── 60_While_Vs_For.js                    # while(true) with break
 │   ├── 61_Do_While.js                        # do-while retry example
-│   ├── 62_DoWhile_Vs_While.js                # first-run behavior comparison
-│   └── 63_NestedFor_Loop.js                  # nested loops and index pairs
-├── 10_Chapter_Arrays/
-│   ├── 64_Array.js                           # indexing, .at(-1), length, negative index
-│   ├── 65_Array.js                           # length, out-of-bounds returns undefined
-│   ├── 66_Array_Creation.js                  # literal, new Array, Array.of, Array.from
-│   ├── 67_Access_Modify_Array.js             # bracket access, .at(), assign by index
-│   ├── 68_Arrays_Adding_Removing.js          # push/pop/unshift/shift/splice
-│   ├── 69_Array_Real.js                      # real loop over a browser list
-│   ├── 70_Array_Searching.js                 # indexOf, lastIndexOf, includes
-│   ├── 71_IQ.js                              # find, findIndex, findLast, findLastIndex
-│   ├── 72_Array_Iterate.js                   # for, for...of, forEach, entries, for...in
-│   ├── 73_Arrays_Transform.js                # map (transform) vs filter (select)
-│   ├── 74_Array_Sorting1.js                  # default lexicographic sort, comparators, reverse
-│   ├── 75_Slicing.js                         # slice(start, end), negative indexes, no mutation
-│   ├── 76_ArrayConcat.js                     # concat, spread (...), join
-│   ├── 77_Array_Checking.js                  # Array.isArray, every, some, ASI semicolon trap
-│   ├── 78_Copy.js                            # shallow copy 4 ways vs reference assignment
-│   ├── 79_Destructuring.js                   # array destructuring, rest, defaults, swap
-│   └── Hoisting.js                           # arrow-fn hoisting traps (const/let/var)
-├── 11_Chapter_Functions/
-│   ├── 78_Functions.js                       # why functions exist — kill repeated logic
-│   ├── 79_Functions2.js                      # define once, call many times
-│   ├── 80_Type1_Basic_Fn.js                  # Type 1 — no param, no return (undefined)
-│   ├── 81_Type2_Basic_Fn.js                  # Type 2 — params, no return
-│   ├── 82_Type3_Basic_Fn.js                  # Type 3 — no params, returns a value
-│   ├── 83_Type4_Basic_Fn.js                  # Type 4 — params + return
-│   ├── 84_Template_Literal.js                # returning a template literal
-│   ├── 85_Fn_Exp.js                          # function declaration vs function expression
-│   ├── 86_Fn_Arrow.js                        # declaration → expression → arrow, same output
-│   ├── 87_Fn_Arrow.js                        # implicit vs block-bodied arrows
-│   ├── 88_REAL.js                            # same status-code check in all three styles
-│   ├── 89_fn.js                              # IIFE — anonymous and arrow form
-│   ├── 90_Spead_Fn.js                        # spread args in, rest params collect
-│   ├── 91_Return_Fn.js                       # if/else-if/else returns, no return → undefined
-│   ├── 91_Var_Let_Const.js                   # var function-scope vs let block-scope vs const
-│   ├── 93.Hoisting.js                        # memory-creation vs execution phase
-│   ├── 95_Fn_Hoisting.js                     # var hoisting inside a function scope
-│   ├── 96_Let_Hoisting.js                    # let hoisted but uninitialized → ReferenceError
-│   ├── 97_Let.js                             # var re-declaration inside a block
-│   ├── 98_TDZ.js                             # Temporal Dead Zone in a block
-│   ├── 99.IQ.js                              # var leaks out of the if block
-│   ├── 101.js                                # const for URLs and config, no reassignment
-│   ├── 102_Hoisting_TDZ.md                   # full hoisting + TDZ reference guide
-│   ├── 103_IQ.js                             # declaration hoists, expression does not
-│   └── 194_Var_Hoisting.js                   # var hoisting fundamentals
-├── 12_Chapter_Fn_Closure/
-│   ├── 104_Scope_Fn.js                       # global vs local scope, inner sees outer
-│   ├── 105_Closure.js                        # returned function remembers its birthplace
-│   ├── 106_Closure_Remembers.js              # counter with private state (increment/get)
-│   ├── 107_Fn_Closure_Real.js                # max-retry tracker per test
-│   └── 108_fn_Simple.js                      # rate limiter returning true/false
-├── 13_Chapter_Strings/
-│   ├── 109_Strings.js                        # quotes, template literals, multiline, String()
-│   ├── 110_String_Fn.js                      # length, index, .at(), charAt, charCodeAt
-│   ├── 111_Str_Searching.js                  # includes, startsWith/endsWith, indexOf
-│   ├── 112_String_Extraction.js              # slice, substring, negative indexes, .at()
-│   ├── 113_String_More.js                    # case, trim, replace, concat
-│   ├── 114_Extra.js                          # regex replacement, split, join
-│   ├── 115_Fn_String_Conversion.js           # String/Number conversion and immutability
-│   └── String_CheetSheet.md                  # complete SDET-focused string reference
-├── 14_Chapter_Objects/
-│   ├── 116_Objects.js                        # literals, key access, reference equality
-│   ├── 117_Object_Person.js                  # deeply nested object with methods
-│   ├── 118_Object.js                         # object method and this
-│   ├── 119_Objects.js                        # access, add, and update properties
-│   ├── 120_Config.js                         # dynamic config properties and delete
-│   └── 121_CallBy_Ref_CallByValue.js         # primitive copies vs object references
-├── 15_Chapter_MultiDimen_Arrays/
-│   ├── 122_Arrays.js                         # 1D vs 2D arrays, nested-loop grid print
-│   ├── 123_Arrays_2.js                       # 2D grids — rows/cols, for, for...of, forEach
-│   ├── 124_Array_Fn.js                       # map/reduce over rows, real suite results
-│   ├── 125_Right_Pattern.js                  # right-triangle star pattern
-│   ├── 126_Left_Pattern.js                   # inverted (left-hand) star pattern
-│   └── 127_Pyramid.js                        # centered pyramid pattern
-├── 16_Chapter_Callback/
-│   ├── 128_Callback.js                       # callback as arg — 3 ways to pass (named/anon/arrow)
-│   ├── 129_Callback.js                       # async test callback signature
-│   ├── 130_Sync_Callback.js                  # synchronous forEach callback
-│   ├── 131_async_callback                    # setTimeout — async callback ordering
-│   ├── 132_CallbackHell.js                   # nested login-flow callbacks (the "hell")
-│   ├── 133_Call_RealHell.js                  # deep nested error-first callback chain
-│   ├── 133_Call_RealHello.js                 # same error-first chain, hello-flow variant
-│   ├── 134_Call_Return.js                    # callback returning a value
-│   └── 135_Pyramid_DOM.js                    # nested DOM-step callback pyramid
-├── 17_Chapter_Promises/
-│   ├── 136_Promise.js                        # new Promise, resolve/reject states
-│   ├── 137_REAL_Promise_API.js               # .then on a resolved promise
-│   ├── 138_REAL_Promise_API.js               # .catch on a rejected promise
-│   ├── 139_Promise_Finally.js                # .finally always runs
-│   ├── 140_Promise_REAL.js                   # promise chaining for a login flow
-│   ├── 141_Promise.All.js                    # Promise.all — all-or-fail
-│   ├── 142_Promise_Settle.js                 # Promise.allSettled — report every test
-│   ├── 143.Promise.race.js                   # Promise.race — first to settle wins
-│   ├── 144_Promise.IQ.js                     # promise state quiz questions
-│   └── 145_IQ.js                             # all/allSettled quiz questions
-├── 18_Chapter_Async_Await/
-│   ├── 146_Async_Await.js                    # .then chain vs async/await shape
-│   └── 147_Async&Await_BetterWay.js          # async/await login flow (the "better way")
-├── "Erros in JS"/
-│   └── 01_TypeErrors.js                      # common TypeError causes
+│   ├── 62_DoWhile_vs_While.js                # first-run behavior comparison
+│   └── 63_NestedFor_lOOP.js                  # nested loops and index pairs
+├── 10_chapter_Arrays/
+│   ├── 64_Array.js                          # indexing, .at(-1), length, negative index
+│   ├── 65_Array.js                          # length, out-of-bounds returns undefined
+│   ├── 66_Array_Creation.js                 # literal, new Array, Array.of, Array.from
+│   ├── 67_Array_Access_Modify.js            # bracket access, .at(), assign by index
+│   ├── 68_Arrays_Adding_Remove.js           # push/pop/unshift/shift/splice
+│   ├── 69_Array_REAL.js                     # real loop over a browser list
+│   ├── 70_Array_Searching.js                # indexOf, lastIndexOf, includes
+│   ├── 71_IQ.js                             # find, findIndex, findLast, findLastIndex
+│   ├── 72_Array_Interate.js                 # for, for...of, forEach, entries, for...in
+│   ├── 73_Arrays_Transform.js               # map (transform) vs filter (select)
+│   ├── 74_Sorting.js                        # default lexicographic sort, comparators, reverse
+│   ├── 75_Slicing.js                        # slice(start, end), negative indexes, no mutation
+│   ├── 76_ArrayConcat.js                    # concat, spread (...), join
+│   ├── 77_Array_Checking.js                 # Array.isArray, every, some, ASI semicolon trap
+│   ├── 78_Copy.js                           # shallow copy 4 ways vs reference assignment
+│   └── 79_Destructuring.js                  # array destructuring, rest, defaults, swap
+├── 11_chapter_Funtions/
+│   ├── 78_Fn.js                             # why functions exist — kill repeated logic
+│   ├── 79.Fn.js                             # define once, call many times
+│   ├── 80_Type1_Basic_Fn.js                 # Type 1 — no param, no return (undefined)
+│   ├── 81_Type2_Basic_Fn.js                 # Type 2 — params, no return
+│   ├── 82_Type3_Basic_Fn.js                 # Type 3 — no params, returns a value
+│   ├── 83_Type4_Basic_Fn.js                 # Type 4 — params + return
+│   ├── 84_Template_Literal.js               # returning a template literal
+│   ├── 85_Fn_Exp.js                         # function declaration vs function expression
+│   ├── 86_Fn_Arrow.js                       # declaration → expression → arrow, same output
+│   ├── 87_Fn_Arrow.js                       # implicit vs block-bodied arrows
+│   ├── 88_REAL.js                           # same status-code check in all three styles
+│   ├── 89.fn.js                             # IIFE — anonymous and arrow form
+│   ├── 90_Spead_Fn.js                       # spread args in, rest params collect
+│   ├── 91_Return_Fn.js                      # if/else-if/else returns, no return → undefined
+│   ├── 92_Var_Let_Const.js                  # var function-scope vs let block-scope vs const
+│   ├── 93.Hoisting.js                       # memory-creation vs execution phase
+│   ├── 94_Var_Hoisting.js                   # var hoisted as undefined
+│   ├── 95_Fn_Hoisting.js                    # var hoisting inside a function scope
+│   ├── 96_Let_Hoisting.js                   # let hoisted but uninitialized → ReferenceError
+│   ├── 97_Let.js                            # var re-declaration inside a block
+│   ├── 98_TDZ.js                            # Temporal Dead Zone in a block
+│   ├── 99.IQ.js                             # var leaks out of the if block
+│   ├── 100_IQ.js                            # let shadowing + TDZ trap
+│   ├── 101.js                               # const for URLs and config, no reassignment
+│   ├── 102_Hoisting_TDZ.md                  # full hoisting + TDZ reference guide
+│   └── 103_IQ.js                            # declaration hoists, expression does not
+├── 12_chapter_Fn_Closure/
+│   ├── 104_Scope_Fn.js                      # global vs local scope, inner sees outer
+│   ├── 105_Closure.js                       # returned function remembers its birthplace
+│   ├── 106_Closure_Remembers.js             # counter with private state (increment/get)
+│   ├── 107_Fn_Closure_REAL.js               # max-retry tracker per test
+│   └── 108_Fn_Simple.js                     # rate limiter returning true/false
+├── 13_String/
+│   ├── 109_String.js                        # quotes, template literals, multiline, String()
+│   ├── 110_String_Fn.js                     # length, index, .at(), charAt, charCodeAt
+│   ├── 111.Str_Searching.js                 # includes, startsWith/endsWith, indexOf
+│   ├── 112_Extraction_String.js             # slice, substring, negative indexes, .at()
+│   ├── 113_String_More.js                   # case, trim, replace, concat
+│   ├── 114_Extra.js                         # regex replacement, split, join
+│   ├── 115_Fn_String_Conversion.js          # String/Number conversion and immutability
+│   └── String_Cheatsheet.md                 # complete SDET-focused string reference
+├── 14_Objects/
+│   ├── 116_Objects.js                       # literals, key access, reference equality
+│   ├── 117_Object_Person.js                 # deeply nested object with methods
+│   ├── 118_Object.js                        # object method and this
+│   ├── 119_Objects.js                       # access, add, and update properties
+│   ├── 120_Config.js                        # dynamic config properties and delete
+│   └── 121_CallBy_Ref_CallByValue.js        # primitive copies vs object references
+├── 15_Multi_Dimensions_Array/
+│   ├── 122_Array.js                         # 1D vs 2D arrays, nested-loop grid print
+│   ├── 124_Array_Fn.js                      # map/reduce over rows, real suite results
+│   ├── 125_Right_Pattern.js                 # right-triangle star pattern
+│   ├── 126_Left_Hand.js                     # inverted (left-hand) star pattern
+│   └── 127_Pyramid_Pattern.js               # centered pyramid pattern
+├── 16_Callback/
+│   ├── 128_Callback.js                      # callback as arg — 3 ways to pass (named/anon/arrow)
+│   ├── 129_Callback.js                      # async test callback signature
+│   ├── 130_Sync_Callback.js                 # synchronous forEach callback
+│   ├── 131_Async_Callback.js                # setTimeout — async callback ordering
+│   ├── 132_CallbackHell.js                  # nested login-flow callbacks (the "hell")
+│   ├── 133_Call_RealHello.js                # deep nested error-first callback chain
+│   ├── 134_Call_Return.js                   # callback returning a value
+│   └── 135_Pyramid_DOM.js                   # nested DOM-step callback pyramid
+├── 17_Promise/
+│   ├── 136_Promise.js                       # new Promise, resolve/reject states
+│   ├── 137_REAL_Promise_API.js              # .then on a resolved promise
+│   ├── 138_REAL_Promise_API.js              # .catch on a rejected promise
+│   ├── 139_Promise_Finally.js               # .finally always runs
+│   ├── 140_Promise_REAL.js                  # promise chaining for a login flow
+│   ├── 141_Promise.All.js                   # Promise.all — all-or-fail
+│   ├── 142_Promise_Settle.js                # Promise.allSettled — report every test
+│   ├── 143.Promise.race.js                  # Promise.race — first to settle wins
+│   ├── 144_Promise.IQ.js                    # promise state quiz questions
+│   └── 145.IQ.js                            # all/allSettled quiz questions
+├── 18_Async_Await/
+│   ├── 146.js                               # .then chain vs async/await shape
+│   ├── 147_BetterWay.js                     # async/await login and API request flows
+│   ├── 148_AA.js                            # async return values and awaiting resolved promises
+│   ├── 149_Example.spec.ts                  # await inside a Playwright test
+│   ├── 150.js                               # try/catch/finally error handling
+│   ├── 151_Seq_Eexecution.js                # dependent API calls run sequentially
+│   ├── 152_Parall_Execution.js              # independent API calls with Promise.all
+│   ├── 153_API_Flaky.js                     # bounded retry-until-success pattern
+│   └── 154_IQ.js                            # async/await interview examples and execution order
+├── 19_Export_Import/
+│   ├── package.json                          # scopes this chapter's .js files as ES modules
+│   ├── utils.js                              # named exports: BASE_URL, formatTestName, formatTestName2
+│   ├── testutil.js                           # named exports: BASE_URL, formatUpperCaseString
+│   ├── 155.js                                # importing named exports from testutil.js
+│   ├── 156_test.js                           # importing from two modules with alias renaming
+│   ├── 157.js                                # default import from logs/logger.js
+│   └── logs/
+│       └── logger.js                         # default export (log) + named export (logBetter)
+├── 20_Class_Object_OOPs/
+│   ├── 01_Class_Object/                      # classes, constructors, objects, and automation examples
+│   ├── 02_Public_Private/                    # public and private class fields
+│   └── 03_Static_JS/                        # static fields, methods, and instance fields
+├── 21_OOPs_Ecapsulation/
+│   ├── 169.js                                # private fields with getter and setter methods
+│   ├── 170_Car.js                            # encapsulated car engine example
+│   ├── 171_Ecap_Bnak.js                      # protected balance update example
+│   └── 172_IQ.js–175_IQ.js                  # automation and interview practice
+├── 22_OOPs_Inheritance/
+│   ├── 01_Single_Inheritance/
+│   │   ├── 176_SI.js–179_IQ.js               # extends, super, overriding, setup, and teardown
+│   │   └── 180.IQ.js–182.js                  # polymorphic test, page, and report examples
+│   ├── 02_Multiple_Inheritance/
+│   │   ├── 178.js                            # why `extends F1, F2` is a syntax error in JS
+│   │   └── 179.js                            # mixins — compose logging + screenshot abilities
+│   ├── 03_Multi_Level_Inheritance/
+│   │   └── 180.js                            # BasePage → AuthPage → AdminPage chain
+│   └── 04_Hierarchial_Inheritance/
+│       └── 181.js                            # one Father, three sibling Sons
+├── 23_OOPs_Polymorphism/
+│   └── 182_Method_Overriding.js              # child setup() overrides the parent at runtime
+├── 24_OOPs_Interview/
+│   ├── EX1.js–EX3.js                         # constructors, default params, per-instance state
+│   ├── EX4.js                                # `return this` → method chaining
+│   ├── EX5.js                                # three-level super chain → "C>B>A"
+│   ├── 195_IQ.ts                             # typed helpers — string, boolean, void returns
+│   └── 196.ts                                # number[] param + typed filter callback
+├── 25_Typescript/
+│   ├── 183.js                                # the untyped JS starting point
+│   ├── 184.ts / 184.js                       # typed source vs its compiled output
+│   ├── 185.ts–188.ts                         # void returns, primitives, arrays, any vs unknown
+│   └── 190.ts–194.ts                         # arrows, object shapes, void and never
+├── tsconfig.json                             # strict TS config for the .ts lessons
+├── MCQ/
+│   └── Array_MCQ.md                         # array practice multiple-choice questions
 └── IQ_Notes/
     ├── README.md                             # reusable prompt template for new IQ notes
-    ├── Source_Code_ByteCode_BinaryCodeIQ.md  # source vs bytecode vs machine code
-    └── Source_Code_ByteCode_BinaryCodeIQByCMDC.md  # same IQ, generated via CMDC
+    ├── Source_Code_ByteCODE_Binary_IQ.md      # source vs bytecode vs machine code
+    ├── 01_Identifier_Rules.md                 # identifier rules reference
+    ├── 02_Keyword_Notes.md                    # all JS reserved keywords by category
+    ├── 03_commands_mac.md                     # VS Code shortcuts — macOS
+    └── 03_commands_win.md                     # VS Code shortcuts — Windows
 ```
+
+---
+
+## Repeatable “Go Go Go” Command
+
+Command Code users can run `/go-go-go` whenever they want the agent to inspect the current changes, bring this parent README up to date, verify the affected code, create a Conventional Commit on `main`, and push only `main`.
+
+```text
+/go-go-go
+```
+
+The reusable prompt lives at [`.commandcode/commands/go-go-go.md`](.commandcode/commands/go-go-go.md). It stages only intentional files, safely brings feature-branch work into `main`, blocks the push when verification fails or a possible secret is found, pushes only with `git push origin main`, and never force-pushes.
 
 ---
 
@@ -353,7 +461,7 @@ let 变量 = "Chinese characters";
 var g = 10; // cmd + /, ctrl + /
 ```
 
-Full identifier rules + naming convention tables live in [`03_Chapter_Identifiers/04_Identifiers_Rules_Part2.js`](03_Chapter_Identifiers/04_Identifiers_Rules_Part2.js).
+Full identifier rules + naming convention tables live in [`IQ_Notes/01_Identifier_Rules.md`](IQ_Notes/01_Identifier_Rules.md). The complete reserved-keyword list is in [`IQ_Notes/02_Keyword_Notes.md`](IQ_Notes/02_Keyword_Notes.md).
 
 ---
 
@@ -779,7 +887,7 @@ rl.question("Enter a number: ", (input) => {
 });
 ```
 
-See the files in [`08_Chapter_User_Inputs/`](08_Chapter_User_Inputs/) for a comparison of all four input methods and their run commands.
+See [`08_chapter_UserInputs/README.md`](08_chapter_UserInputs/README.md) for a comparison of all four input methods and their run commands.
 
 ---
 
@@ -1180,6 +1288,8 @@ console.log(p, q);                 // 2 1
 | Default value | `let [a = 0] = arr` |
 | Swap | `[a, b] = [b, a]` |
 | Index + value in a loop | `for (let [i, v] of arr.entries())` |
+
+**Practice:** test yourself with [`MCQ/Array_MCQ.md`](MCQ/Array_MCQ.md) before moving to functions.
 
 ---
 
@@ -1596,7 +1706,9 @@ if (true) {
 console.log(a);       // "temp"  — same variable, function-scoped
 ```
 
-Full walkthrough with class hoisting, interview traps, and phase diagrams: [`11_Chapter_Functions/102_Hoisting_TDZ.md`](11_Chapter_Functions/102_Hoisting_TDZ.md).
+Full walkthrough with class hoisting, interview traps, and phase diagrams: [`11_chapter_Funtions/102_Hoisting_TDZ.md`](11_chapter_Funtions/102_Hoisting_TDZ.md).
+
+**Reference:** how source code becomes machine code — [`IQ_Notes/Source_Code_ByteCODE_Binary_IQ.md`](IQ_Notes/Source_Code_ByteCODE_Binary_IQ.md).
 
 ---
 
@@ -1702,7 +1814,7 @@ console.log(sayHi("Bob"));      // "Hi, Bob!"  ✅ after the line
 
 ---
 
-### Functions in Real Test Code
+#### 11.10 — Functions in Real Test Code
 
 **Concept:** The same validation logic written as a declaration, an expression, and an arrow — proving the three forms are interchangeable for ordinary test helpers.
 
@@ -2181,7 +2293,7 @@ console.log(word);                        // "hello" — unchanged
 
 #### 13.6 — Complete String Cheatsheet
 
-[`13_Chapter_Strings/String_CheetSheet.md`](13_Chapter_Strings/String_CheetSheet.md) is the full SDET-focused reference for string properties and methods. It covers character access, searching, extraction, splitting, Unicode-safe handling, case and whitespace, padding, replacement, comparison, templates, conversion, and practical test-automation recipes.
+[`13_String/String_Cheatsheet.md`](13_String/String_Cheatsheet.md) is the full SDET-focused reference for string properties and methods. It covers character access, searching, extraction, splitting, Unicode-safe handling, case and whitespace, padding, replacement, comparison, templates, conversion, and practical test-automation recipes.
 
 Use the lesson files for focused examples and the cheatsheet when you need to compare methods or review a gotcha quickly.
 
@@ -2590,6 +2702,20 @@ Promise.allSettled([
 - **Q: What does `async` guarantee?** A: The function always returns a promise, even if it returns a plain value.
 - **Q: What does `await` require?** A: It can only be used inside an `async` function, and it waits for the promise on its right.
 - **Q: How do I handle errors?** A: Wrap the awaited calls in `try/catch`, or call the async function and attach `.catch` to its returned promise.
+- **Q: How do I await an API-style promise in a regular Node.js script?** A: Put the `await` inside an `async` function, call that function, and then use the resolved response. This avoids relying on top-level `await` in a CommonJS script.
+- **Q: Sequential or parallel?** A: Await calls one by one when a later step depends on an earlier result. Start independent calls together with `Promise.all` to avoid waiting for each timer or network request in turn.
+- **Q: How should a retry loop stop?** A: Return immediately after the first successful attempt, and throw only after the configured maximum number of failures.
+- **Q: Why does `A, B, D, C` print in that order?** A: The synchronous code prints `A`, enters the async function and prints `B`, then `await` yields. The caller continues with `D`, and the promise continuation prints `C` in a microtask.
+
+| Lesson | Focus |
+|--------|-------|
+| [`148_AA.js`](18_Async_Await/148_AA.js) | Calling an async function returns a promise; `await` unwraps resolved values. |
+| [`149_Example.spec.ts`](18_Async_Await/149_Example.spec.ts) | Playwright actions and assertions awaited inside an async test. |
+| [`150.js`](18_Async_Await/150.js) | Rejected promises handled with `try`, `catch`, and `finally`. |
+| [`151_Seq_Eexecution.js`](18_Async_Await/151_Seq_Eexecution.js) | Three dependent one-second calls take about three seconds sequentially. |
+| [`152_Parall_Execution.js`](18_Async_Await/152_Parall_Execution.js) | Three independent one-second calls complete in about one second with `Promise.all`. |
+| [`153_API_Flaky.js`](18_Async_Await/153_API_Flaky.js) | Bounded retry examples cover eventual success and exhausting every attempt. |
+| [`154_IQ.js`](18_Async_Await/154_IQ.js) | Interview examples covering resolved values, rejection handling, API responses, and microtask order. |
 
 ```js
 async function runLoginFlow() {
@@ -2609,6 +2735,52 @@ async function runLoginFlow() {
 runLoginFlow();
 ```
 
+The second example models an API request that resolves with an HTTP status. The awaited response stays inside an `async` function, so the file runs directly with Node.js.
+
+```js
+function apiRequest() {
+    return new Promise(function (resolve) {
+        resolve({ status: 200 });
+    });
+}
+
+async function runApiRequest() {
+    let response = await apiRequest();
+    console.log("API status:", response.status);
+}
+
+runApiRequest();
+```
+
+Sequential execution waits for each result before starting the next call. Parallel execution starts independent work together and awaits the combined result.
+
+```js
+let login = await apiCall("Login");
+let dashboard = await apiCall("Dashboard"); // starts after Login finishes
+
+let [auth, user] = await Promise.all([
+    apiCall("Auth Service"),
+    apiCall("User Service")
+]); // both calls run together
+```
+
+Run the plain JavaScript lessons directly with Node.js:
+
+```bash
+node 18_Async_Await/148_AA.js
+node 18_Async_Await/150.js
+node 18_Async_Await/151_Seq_Eexecution.js
+node 18_Async_Await/152_Parall_Execution.js
+node 18_Async_Await/153_API_Flaky.js
+node 18_Async_Await/154_IQ.js
+```
+
+`149_Example.spec.ts` requires a project with `@playwright/test` and its browser installed. From that configured environment, run:
+
+```bash
+npx playwright test 18_Async_Await/149_Example.spec.ts
+```
+
 ```mermaid
 flowchart TD
     A[async function] --> B["await openBrowser()"]
@@ -2620,33 +2792,517 @@ flowchart TD
 
 ---
 
-### Errors — Common JS Errors
+### 19 — Export / Import (ES Modules)
 
-**Concept:** The `Erros in JS/` folder collects short, runnable examples of JavaScript's built-in error types. So far it covers `TypeError` — calling a non-function, reading a property of `null`/`undefined`, reassigning a `const`, and calling array methods on non-arrays.
+**Concept:** ES modules let you split code across files. `export` makes a variable, function, or class available to other files; `import` brings it in. There are two export styles: **named exports** (export specific things by name) and **default exports** (export one main thing per file).
 
-**Why:** Reading stack traces is easier when you have seen each error type fail on purpose. Recognising "X is not a function" or "Cannot read properties of null" instantly narrows down the bug before you even open the stack trace.
+**Why:** Real test projects are never one file. Page objects, utilities, config, and loggers each live in their own file and are wired together with imports — this is how Playwright fixtures and helpers connect.
 
 **Q&A — why use this?**
-- **Q: What throws `TypeError: x is not a function`?** A: Calling something that isn't callable — a plain object, a number, or a `var`-declared function expression before it is assigned.
-- **Q: What throws `Cannot read properties of null`?** A: Accessing `.length`, `.name`, or any property on `null`/`undefined`, typically an API response or selector result that came back empty.
-- **Q: When does `Assignment to constant variable` throw?** A: Reassigning a `const` binding. The binding is immutable, even though the object it points to can still be mutated.
+- **Q: Named vs default export?** A: Named exports let you export many things from one file (`export let BASE_URL`, `export function formatName`). A default export is the file's single main export (`export default function log`). You can mix both in one file.
+- **Q: How do I import a named export?** A: Use curly braces with the exact name: `import { BASE_URL, formatTestName } from './utils.js'`. Rename with `as`: `import { BASE_URL as url } from './utils.js'`.
+- **Q: How do I import a default export?** A: No curly braces, and you pick any name: `import log from './logs/logger.js'`.
+- **Q: What's the gotcha?** A: Named imports must match the exported name exactly (case-sensitive). A variable that is never exported is private to its file — `let fname = "Pramod"` in `testutil.js` is invisible to importers.
+
+```mermaid
+flowchart TD
+    U["utils.js"] -->|"export let BASE_URL<br/>export function formatTestName"| N["Named exports"]
+    T["testutil.js"] -->|"export let BASE_URL<br/>export function formatUpperCaseString"| N
+    L["logs/logger.js"] -->|"export default function log<br/>export function logBetter"| D["Default + named"]
+    N --> I1["import { BASE_URL, formatTestName } from './utils.js'"]
+    N --> I2["import { BASE_URL as alias } from './testutil.js'"]
+    D --> I3["import log from './logs/logger.js'"]
+    D --> I4["import { logBetter } from './logs/logger.js'"]
+```
 
 ```js
-const user = { name: "Alex" };
-user(); // TypeError: user is not a function
+// utils.js — named exports
+export let BASE_URL = "https://api.example.com";
 
-let data = null;
-console.log(data.length); // TypeError: Cannot read properties of null
+export function formatTestName(name) {
+    return "TC_" + name.toUpperCase();
+}
 
-const maxLimit = 100;
-maxLimit = 200; // TypeError: Assignment to constant variable.
+// testutil.js — named exports (different module, same export name BASE_URL)
+export let BASE_URL = "https://app.vwo.com";
+
+export function formatUpperCaseString(sname) {
+    return sname.toUpperCase();
+}
+
+// logs/logger.js — default export + named export
+export default function log(message) {
+    console.log("[LOG] " + message);
+}
+
+export function logBetter(message) {
+    console.log("[LOGS] " + message);
+}
+```
+
+```js
+// 155.js — importing named exports
+import { BASE_URL, formatUpperCaseString } from './testutil.js';
+console.log(BASE_URL);                              // "https://app.vwo.com"
+console.log(formatUpperCaseString("Pramod"));       // "PRAMOD"
+
+// 156_test.js — importing from two modules, renaming with `as`
+import { BASE_URL as bul_util, formatTestName } from "./utils.js";
+import { BASE_URL as bul_testtul, formatUpperCaseString } from "./testutil.js";
+console.log(bul_util);                              // "https://api.example.com"
+console.log(bul_testtul);                           // "https://app.vwo.com"
+console.log(formatTestName("login"));               // "TC_LOGIN"
+
+// 157.js — default import (no braces, any name)
+import log from './logs/logger.js';
+log('Starting');                                    // "[LOG] Starting"
+```
+
+| Export style | Syntax | Import syntax |
+|-------------|--------|---------------|
+| Named | `export let X` / `export function f()` | `import { X, f } from './file.js'` |
+| Default | `export default function f()` | `import f from './file.js'` (any name) |
+| Rename on import | — | `import { X as alias } from './file.js'` |
+
+Run the lessons with Node.js. The chapter's local `package.json` sets `"type": "module"`, so Node loads these `.js` files as ES modules without extra flags:
+
+```bash
+node 19_Export_Import/155.js
+node 19_Export_Import/156_test.js
+node 19_Export_Import/157.js
+```
+
+---
+
+### 20 — Classes & OOP
+
+**Concept:** A `class` is a blueprint for creating objects with shared structure. It bundles **attributes** (data, declared as fields) and **behaviour** (functions, called methods). The `new` keyword creates an **instance** (object) from the class, and the variable holds a **reference** to that object — not the object itself.
+
+**Why:** Classes are how Playwright's Page Object Model is built. Every page class (`class LoginPage`) has locators (attributes) and actions like `login()` (methods). Understanding `new`, references, and private fields (`#`) is the foundation for writing maintainable test frameworks.
+
+**Q&A — why use this?**
+- **Q: What does `new Person()` do?** A: It allocates a new object in memory, runs the class constructor, and returns a reference to that object. Without `new`, `Person()` throws a `TypeError`.
+- **Q: What is a private field (`#name`)?** A: A field prefixed with `#` is truly private — it cannot be read or written from outside the class, not even by subclasses. This is the JS-native way to hide internal state.
+- **Q: What's the difference between `pramod` and `amit`?** A: Both are references to **different** `Person` objects. `pramod === amit` is `false` because `new` creates a distinct object each time — same blueprint, separate instances.
+- **Q: What's the gotcha?** A: A class is not hoisted like a function declaration. You must define the class before you `new` it. Also, forgetting `new` throws `TypeError: Class constructor Person cannot be invoked without 'new'`.
+
+```mermaid
+flowchart TD
+    C["class Person { } — the blueprint"] --> N1["new Person() — creates object 1"]
+    C --> N2["new Person() — creates object 2"]
+    N1 --> R1["pramod = reference → object 1"]
+    N2 --> R2["amit = reference → object 2"]
+    R1 -->|"pramod === amit"| F["false — different objects"]
+```
+
+```js
+class Person {
+    // Attributes (private fields — only accessible inside the class)
+    #name;
+    #age;
+
+    // Behaviour (methods)
+    eat() {}
+    sleep() {}
+}
+
+// Create instances — each `new` produces a separate object
+const pramod = new Person(); // pramod is a reference to a new Person object
+const amit = new Person();   // amit is a reference to a different Person object
+
+// pramod === amit  →  false  (different objects, same blueprint)
+```
+
+| Term | Means |
+|------|-------|
+| `class` | Blueprint — defines what every instance will have |
+| `new` | Creates a fresh object from the class |
+| Instance | The actual object created by `new` |
+| Reference | The variable holding the object's address |
+| `#field` | Private — inaccessible from outside the class |
+| Method | A function defined inside a class |
+
+Run the lesson:
+
+```bash
+node 20_Class_Object_OOPs/01_Class_Object/158.js
+```
+
+---
+
+### 21 — OOP Encapsulation
+
+**Concept:** Encapsulation keeps an object's internal state private and exposes controlled methods for reading or changing it. JavaScript private fields use the `#` prefix, while getter and setter methods define the permitted access.
+
+**Why:** Test frameworks often need to protect credentials, execution status, counters, and configuration from accidental direct changes. Encapsulation keeps those rules inside the class that owns the data.
+
+The lessons demonstrate private instance fields, private static fields, getter/setter methods, and validation before a private value is changed.
+
+```bash
+node 21_OOPs_Ecapsulation/169.js
+node 21_OOPs_Ecapsulation/172_IQ.js
+```
+
+---
+
+### 22 — OOP Inheritance
+
+**Concept:** Inheritance lets a child class reuse fields and methods from a parent class with `extends`. `super()` initializes the parent portion of the object, `super.method()` calls a parent implementation. The chapter is now split into the four classic inheritance shapes, one folder each.
+
+**Why:** Playwright page objects and test classes share setup, teardown, navigation, and verification. A base class owns that behaviour once, and every page or test type inherits it instead of copy-pasting it.
+
+**Q&A — why use this?**
+- **Q: When do I reach for `extends`?** A: When two or more classes share the same setup/teardown or navigation logic. Put the shared part in a `BasePage`/`BaseTest` and let children inherit it.
+- **Q: What does it replace?** A: Duplicated helper functions and copy-pasted `beforeEach` blocks scattered across spec files.
+- **Q: What's the gotcha?** A: If a child declares a `constructor`, you **must** call `super(...)` before touching `this`, otherwise you get `ReferenceError: Must call super constructor`.
+
+```mermaid
+flowchart TD
+    A["22 — Inheritance"] --> S["01 Single<br/>Father → Son"]
+    A --> M["02 Multiple<br/>❌ not supported → Mixins"]
+    A --> L["03 Multi-Level<br/>Grandfather → Father → Son"]
+    A --> H["04 Hierarchical<br/>one Father → many Sons"]
+```
+
+| Type | Shape | Supported in JS? | Folder |
+|------|-------|:----------------:|--------|
+| Single | `Son extends Father` | ✅ | `01_Single_Inheritance/` |
+| Multiple | `Son extends F1, F2` | ❌ — use mixins | `02_Multiple_Inheritance/` |
+| Multi-Level | `A → B → C` | ✅ | `03_Multi_Level_Inheritance/` |
+| Hierarchical | one parent, many children | ✅ | `04_Hierarchial_Inheritance/` |
+
+---
+
+#### 22.1 — Single Inheritance
+
+**Concept:** One child class extends exactly one parent class, inheriting all its public fields and methods.
+
+**Why:** This is the everyday shape of a test framework — every page object extends one `BasePage`.
+
+**Q&A — why use this?**
+- **Q: When do I reach for it?** A: The moment a second class needs the same `open()` / `waitForLoad()` behaviour you already wrote once.
+- **Q: What does it replace?** A: A utility module of loose functions that every class has to import and re-wire manually.
+- **Q: What's the gotcha?** A: Inherited methods still run with the **child's** `this`, so a parent method can read fields the parent never declared.
+
+```mermaid
+flowchart TD
+    F["class Father"] --> S["class Son extends Father"]
+    S -->|"super()"| F
+```
+
+```js
+class BasePage {
+    constructor(name) { this.name = name; }
+    open() { console.log("[OPEN] " + this.name); }
+}
+
+class LoginPage extends BasePage {
+    login(user) { console.log("[LOGIN] " + user); }
+}
+
+const page = new LoginPage("Login Page");
+page.open();          // inherited from BasePage
+page.login("pramod"); // defined on LoginPage
+```
+
+```bash
+node 22_OOPs_Inheritance/01_Single_Inheritance/176_SI.js
+```
+
+---
+
+#### 22.2 — Multiple Inheritance & Mixins
+
+**Concept:** JavaScript has **no** multiple inheritance — `class Son extends F1, F2` is a syntax error. The workaround is a **mixin**: a function that takes a base class and returns a new class extending it, so you can compose several of them.
+
+**Why:** A test class often needs several independent abilities (logging, screenshots, retries) that do not belong on one shared parent.
+
+**Q&A — why use this?**
+- **Q: When do I reach for a mixin?** A: When abilities are orthogonal — a `SmartTest` needs both logging and screenshots, but neither is "the" parent.
+- **Q: What does it replace?** A: A bloated god-class base that every test inherits just to reach one helper.
+- **Q: What's the gotcha?** A: Order matters. `ScreenshotMixin(LoggerMixin(TestCase))` builds the chain inside-out, and a later mixin can shadow an earlier one's method of the same name.
+
+```mermaid
+flowchart LR
+    T["TestCase"] --> LM["LoggerMixin&#40;TestCase&#41;"]
+    LM --> SM["ScreenshotMixin&#40;...&#41;"]
+    SM --> ST["class SmartTest"]
+    ST --> R["run&#40;&#41; + log&#40;&#41; + takeScreenshot&#40;&#41;"]
+```
+
+```js
+const LoggerMixin = (Base) => class extends Base {
+    log(msg) { console.log("[Log] " + msg); }
+};
+
+const ScreenshotMixin = (Base) => class extends Base {
+    takeScreenshot() { console.log("[SCREENSHOT] captured"); }
+};
+
+class TestCase {
+    constructor(name) { this.name = name; }
+    run() { console.log("Running: " + this.name); }
+}
+
+class SmartTest extends ScreenshotMixin(LoggerMixin(TestCase)) {}
+
+const t = new SmartTest("Login Flow");
+t.run();              // Running: Login Flow
+t.log("Test started");// [Log] Test started
+t.takeScreenshot();   // [SCREENSHOT] captured
+```
+
+```bash
+node 22_OOPs_Inheritance/02_Multiple_Inheritance/179.js
+```
+
+> `02_Multiple_Inheritance/178.js` is intentionally broken — it shows the `extends F1, F2` syntax error you are meant to see once.
+
+---
+
+#### 22.3 — Multi-Level Inheritance
+
+**Concept:** A chain of three or more classes, where each level extends the one above it: `BasePage → AuthPage → AdminPage`.
+
+**Why:** Real apps have layered pages — every page can open, only logged-in pages can `login()`, only admin pages can `manageUsers()`.
+
+**Q&A — why use this?**
+- **Q: When do I reach for it?** A: When a subset of your pages shares extra behaviour that the very top base class should not know about.
+- **Q: What does it replace?** A: Duplicating auth helpers into every authenticated page object.
+- **Q: What's the gotcha?** A: Deep chains get fragile. Three levels is usually the practical limit — past that, prefer composition or mixins.
+
+```mermaid
+flowchart TD
+    B["BasePage — open&#40;&#41;"] --> A["AuthPage — login&#40;&#41;"]
+    A --> AD["AdminPage — manageUsers&#40;&#41;"]
+    AD -->|"inherits both"| ALL["open&#40;&#41; + login&#40;&#41; + manageUsers&#40;&#41;"]
+```
+
+```js
+class BasePage {
+    constructor(name) { this.name = name; }
+    open() { console.log("[OPEN] " + this.name); }
+}
+
+class AuthPage extends BasePage {
+    login(user) { console.log("[LOGIN] " + user); }
+}
+
+class AdminPage extends AuthPage {
+    constructor() { super("Admin Panel"); }   // walks the chain up to BasePage
+    manageUsers() { console.log("[ADMIN] Managing users"); }
+}
+
+const admin = new AdminPage();
+admin.open();               // from BasePage
+admin.login("superadmin");  // from AuthPage
+admin.manageUsers();        // from AdminPage
+```
+
+```bash
+node 22_OOPs_Inheritance/03_Multi_Level_Inheritance/180.js
+```
+
+---
+
+#### 22.4 — Hierarchical Inheritance
+
+**Concept:** One parent class, many sibling children. `Son1`, `Son2`, and `Son3` all extend the same `Father` but never each other.
+
+**Why:** This is what a page-object suite actually looks like: one `BasePage`, and `LoginPage` / `CartPage` / `CheckoutPage` all branching off it.
+
+**Q&A — why use this?**
+- **Q: When do I reach for it?** A: Whenever several unrelated pages or test types need the same bootstrapping.
+- **Q: What does it replace?** A: The same constructor and `open()` written N times across N page objects.
+- **Q: What's the gotcha?** A: Siblings are isolated — a change in `Son1` is invisible to `Son2`. Shared behaviour has to move **up** into `Father`, not sideways.
+
+```mermaid
+flowchart TD
+    F["class Father"] --> S1["class Son1 extends Father"]
+    F --> S2["class Son2 extends Father"]
+    F --> S3["class Son3 extends Father"]
+```
+
+```js
+class Father {
+    open() { console.log("[OPEN] base ready"); }
+}
+
+class Son1 extends Father {}
+class Son2 extends Father {}
+class Son3 extends Father {}
+
+[new Son1(), new Son2(), new Son3()].forEach(child => child.open());
+```
+
+```bash
+node 22_OOPs_Inheritance/04_Hierarchial_Inheritance/181.js
+```
+
+---
+
+### 23 — OOP Polymorphism
+
+**Concept:** Polymorphism means "many forms" — the same method name behaves differently depending on the class of the object calling it. **Method overriding** is the core mechanism: a child redefines a method that already exists on the parent, and JavaScript resolves it at runtime from the actual object, not the variable type.
+
+**Why:** A test runner can loop over a mixed array of `UITest`, `APITest`, and `DBTest` objects and call `setup()` on each one, without a single `if`/`switch` on the test type. Each class supplies its own setup.
+
+**Q&A — why use this?**
+- **Q: When do I reach for it?** A: When several classes share an interface (`setup`, `run`, `teardown`) but each needs its own implementation.
+- **Q: What does it replace?** A: A long `switch (testType)` block that has to be edited every time a new test type is added.
+- **Q: What's the gotcha?** A: JavaScript has **no method overloading** — declaring `setup()` twice in the same class does not create two signatures, the second silently wins. Only overriding across parent/child is real polymorphism here.
+
+```mermaid
+flowchart TD
+    B["BaseTest.setup&#40;&#41; — 'Base: open browser'"] --> A["APIPage extends BaseTest"]
+    A --> O["APIPage.setup&#40;&#41; overrides it"]
+    C["test.setup&#40;&#41;"] --> R{"which object?"}
+    R -->|"new APIPage&#40;&#41;"| O
+    R -->|"new BaseTest&#40;&#41;"| B
+```
+
+```js
+class BaseTest {
+    setup() { console.log("Base: open browser"); }
+}
+
+class APIPage extends BaseTest {
+    setup() { console.log("APITest: open browser"); } // overrides the parent
+}
+
+const btest = new BaseTest();
+const test = new APIPage();
+
+test.setup();  // APITest: open browser  ← child wins
+btest.setup(); // Base: open browser
+```
+
+| Term | Means | In JS? |
+|------|-------|:------:|
+| Overriding | Child redefines a parent method | ✅ |
+| Overloading | Same name, different parameter lists | ❌ — use default/rest params |
+| `super.method()` | Call the parent version from the child | ✅ |
+| Runtime dispatch | The **object**, not the variable, picks the method | ✅ |
+
+```bash
+node 23_OOPs_Polymorphism/182_Method_Overriding.js
+```
+
+---
+
+### 24 — OOP Interview Practice
+
+**Concept:** A drill folder of short, self-contained OOP problems (`EX1`–`EX5`) plus the first TypeScript-flavoured interview questions (`195_IQ.ts`, `196.ts`). Each file is one predict-the-output exercise: constructors, default parameters, method chaining with `return this`, and a three-level `super` chain.
+
+**Why:** Interviews test OOP through tiny traps, not big frameworks. These are the exact shapes that come up — "what does `new C().who()` print?" — and running them after predicting the answer is the fastest way to close the gap.
+
+**Q&A — why use this?**
+- **Q: What does `return this` buy me?** A: Method chaining. `new Counter().increment().increment().display()` works only because every method hands the same object back.
+- **Q: How do default parameters work in a constructor?** A: `constructor(name = "staging", port = 3000)` — `new Environment()` uses both defaults, `new Environment("production", 8080)` overrides both.
+- **Q: What does `super.who()` resolve to in a three-level chain?** A: The **immediate** parent's version, which itself may call `super`. `C → B → A` prints `C>B>A`.
+
+```mermaid
+flowchart LR
+    C["new C&#40;&#41;.who&#40;&#41;"] --> B["super.who&#40;&#41; → B"]
+    B --> A["super.who&#40;&#41; → A"]
+    A --> OUT["'C>B>A'"]
+```
+
+```js
+class A { who() { return "A"; } }
+class B extends A { who() { return "B>" + super.who(); } }
+class C extends B { who() { return "C>" + super.who(); } }
+
+console.log(new C().who()); // C>B>A
+
+class Counter {
+    constructor() { this.count = 0; }
+    increment() { this.count++; return this; }  // return this → chainable
+    display() { console.log("Count:", this.count); return this; }
+}
+new Counter().increment().increment().increment().display(); // Count: 3
+```
+
+| File | Drills |
+|------|--------|
+| [`EX1.js`](24_OOPs_Interview/EX1.js) | Constructor + method — a `Bug` with title and severity |
+| [`EX2.js`](24_OOPs_Interview/EX2.js) | Default parameters — `Environment` staging vs production URLs |
+| [`EX3.js`](24_OOPs_Interview/EX3.js) | Two instances, separate state |
+| [`EX4.js`](24_OOPs_Interview/EX4.js) | `return this` → method chaining |
+| [`EX5.js`](24_OOPs_Interview/EX5.js) | Three-level `super` chain → `C>B>A` |
+| [`195_IQ.ts`](24_OOPs_Interview/195_IQ.ts) | Typed helpers: `string`, `boolean`, `void` return types |
+| [`196.ts`](24_OOPs_Interview/196.ts) | `number[]` param + typed `filter` callback |
+
+```bash
+node 24_OOPs_Interview/EX5.js
+npx tsx 24_OOPs_Interview/196.ts
+```
+
+---
+
+### 25 — TypeScript
+
+**Concept:** TypeScript is JavaScript plus a static type layer — *TS = JS + rules*. You annotate variables, parameters, and return values (`let name: string`, `function add(a: number, b: number): number`), the compiler checks them, then erases every type and emits plain JavaScript. Nothing about the runtime changes.
+
+**Why:** Playwright's own API is written in TypeScript. Typed page objects catch a wrong locator argument or a misspelled method at edit time, in the editor, instead of five minutes into a CI run.
+
+**Q&A — why use this?**
+- **Q: When do I reach for `unknown` instead of `any`?** A: Always, when the shape is genuinely unknown. `any` disables checking entirely, `unknown` forces a `typeof` narrow before you can use the value — the safety `any` throws away.
+- **Q: What does `void` vs `never` mean on a return type?** A: `void` — the function returns nothing but does finish. `never` — it never returns at all, because it throws or loops forever.
+- **Q: What's the gotcha?** A: Types vanish at runtime. `let age: number` will not stop a JSON response from putting a string there, so API payloads still need runtime validation.
+
+```mermaid
+flowchart LR
+    TS["184.ts — typed source"] -->|"tsc"| CHECK{"type check"}
+    CHECK -->|"error"| FIX["fix before running"]
+    CHECK -->|"ok"| JS["184.js — plain JS, types erased"]
+    JS --> NODE["node runs it"]
+```
+
+```ts
+// Annotations: variable, parameters, return type
+let testName1: string = "Login test";
+function add_ts(a: number, b: number): number {
+    return a + b;
+}
+
+// unknown is safer than any — must narrow before use
+let payload: unknown = "hello";
+if (typeof payload === "string") console.log(payload.toUpperCase());
+
+// void returns nothing, never returns at all
+function logTestStep(step: string): void { console.log("[STEP] " + step); }
+function throwError(message: string): never { throw new Error(message); }
+
+// Typed arrays + typed callback — filter failed HTTP codes
+const responseCode: number[] = [200, 201, 404, 500, 302, 403];
+const failed: number[] = responseCode.filter((code: number): boolean => code >= 400);
+console.log("Failed Codes", failed); // [ 404, 500, 403 ]
+```
+
+| Annotation | Example | Note |
+|------------|---------|------|
+| `string` / `number` / `boolean` | `let age: number = 30` | No separate `int` / `float` — all numbers are `number` |
+| `null` / `undefined` | `let nothing: null = null` | Distinct types under `strict` |
+| Array | `number[]` or `Array<string>` | Two spellings, same meaning |
+| `any` | `let x: any` | Escape hatch — avoid |
+| `unknown` | `let x: unknown` | Safe `any`, requires narrowing |
+| Object | `{ name: string; age: number }` | Inline shape |
+| `void` | `function f(): void` | Returns nothing |
+| `never` | `function f(): never` | Throws or loops forever |
+
+Compare `183.js` (untyped) with `184.ts` (typed) and `184.js` (the compiled output) to see exactly what the compiler strips. [`tsconfig.json`](tsconfig.json) at the repo root turns on `strict`, `noUncheckedIndexedAccess`, and `exactOptionalPropertyTypes`.
+
+```bash
+npx tsc 25_Typescript/184.ts     # compile → 184.js
+npx tsx 25_Typescript/186.ts     # or run a .ts file directly
 ```
 
 ---
 
 ## MCQ — Practice Questions
 
-**Concept:** The `*_IQ.js` files scattered through the chapters are the self-test bank — predict-the-output exercises (like `71_IQ.js` for arrays, `99.IQ.js`/`103_IQ.js` for functions, `144_Promise.IQ.js`/`145_IQ.js` for promises), each verifying a specific trap or gotcha before an interview does.
+**Concept:** [`MCQ/Array_MCQ.md`](MCQ/Array_MCQ.md) is a growing bank of short multiple-choice questions to self-test the concepts from each chapter, starting with arrays.
 
 **Why:** Recall under exam-style pressure is different from reading, quick MCQs surface the gaps (like `push` returning the new length, not the array) before an interview does.
 
@@ -2663,9 +3319,47 @@ Concept explainers, generated on demand via the prompt template in [`IQ_Notes/RE
 
 | File | Covers |
 |------|--------|
-| [`Source_Code_ByteCode_BinaryCodeIQ.md`](IQ_Notes/Source_Code_ByteCode_BinaryCodeIQ.md) | Source code vs bytecode vs binary/machine code, V8 compilation pipeline |
-| [`Source_Code_ByteCode_BinaryCodeIQByCMDC.md`](IQ_Notes/Source_Code_ByteCode_BinaryCodeIQByCMDC.md) | Same source-vs-bytecode-vs-binary IQ, generated via CMDC |
+| [`Source_Code_ByteCODE_Binary_IQ.md`](IQ_Notes/Source_Code_ByteCODE_Binary_IQ.md) | Source code vs bytecode vs binary/machine code, V8 compilation pipeline |
+| [`01_Identifier_Rules.md`](IQ_Notes/01_Identifier_Rules.md) | Legal identifier characters, case sensitivity, naming conventions |
+| [`02_Keyword_Notes.md`](IQ_Notes/02_Keyword_Notes.md) | Every JS reserved keyword, grouped by category |
+| [`03_commands_mac.md`](IQ_Notes/03_commands_mac.md) | VS Code keyboard shortcuts — macOS |
+| [`03_commands_win.md`](IQ_Notes/03_commands_win.md) | VS Code keyboard shortcuts — Windows |
 
 ---
 
-> **TL;DR:** This repo is a from-scratch JavaScript fundamentals course (`console.log` → scoping → identifiers → literals/numbers → operators → conditionals → switch statements → user input → loops → arrays: create, search, iterate, transform, sort, slice, combine, check, copy, destructure → functions: the four types, expressions, arrows, IIFE, spread/rest, `return`, `var`/`let`/`const`, hoisting, TDZ → scope & closures: scope chain, private state, retry trackers → strings: quotes, template literals, character access, searching, extraction, transformation, splitting, joining, conversion → objects: literals, property access, mutation, nesting, methods, value vs reference → multi-dimensional arrays and star patterns → callbacks: sync/async and callback hell → promises: then/catch/finally, chaining, all/allSettled/race → async/await → common JS errors) plus a `0_Chapter_GENAI` folder for LLM automation-framework prompting, an `IQ_Notes` library of standalone concept references anyone can regenerate with the same prompt template, and `*_IQ.js` files sprinkled through the chapters as a self-test bank.
+> **TL;DR:** A from-scratch JavaScript-to-TypeScript course for test automation, plus a GenAI prompting folder, an MCQ self-test bank, and an IQ_Notes reference library.
+
+## Progress Tracker
+
+| # | Chapter | Topics | Status |
+|---|---------|--------|:------:|
+| 00 | GenAI / RICE Prompting | Structured LLM prompts for framework generation | ✅ |
+| 01 | Hello World | `console.log`, running files with Node | ✅ |
+| 02 | `let` & Scope | Block scope, hoisting basics | ✅ |
+| 03 | Identifiers & Comments | Naming rules, conventions, JSDoc | ✅ |
+| 04 | Literals & Numbers | All literal types, `null` vs `undefined`, BigInt, NaN | ✅ |
+| 05 | Operators | Assignment, arithmetic, comparison, logical, ternary, `typeof`, `??` | ✅ |
+| 06 | Statements & Conditionals | `if / else if / else`, nesting | ✅ |
+| 07 | Switch Statements | Cases, fall-through, grouped cases, `switch(true)` | ✅ |
+| 08 | User Input | `prompt`, `readline`, `prompt-sync`, stdin | ✅ |
+| 09 | Loops | `for`, `while`, `do...while`, nested loops, `break` | ✅ |
+| 10 | Arrays | Create, access, add/remove, search, iterate, transform, sort, slice, combine, check, copy, destructure | ✅ |
+| 11 | Functions | Four types, expressions, arrows, IIFE, spread/rest, `return`, hoisting, TDZ | ✅ |
+| 12 | Scope & Closures | Scope chain, private state, retry trackers | ✅ |
+| 13 | Strings | Quotes, templates, access, search, extract, split/join, conversion | ✅ |
+| 14 | Objects | Literals, property access, mutation, nesting, methods, value vs reference | ✅ |
+| 15 | Multi-Dimensional Arrays | 2D grids, nested loops, star patterns | ✅ |
+| 16 | Callbacks | Sync vs async callbacks, callback hell | ✅ |
+| 17 | Promises | States, then/catch/finally, chaining, all/allSettled/race | ✅ |
+| 18 | Async / Await | Error handling, sequential vs parallel, retries, microtask order | ✅ |
+| 19 | Export / Import (ES Modules) | Named exports, default exports, alias imports, multi-module wiring | ✅ |
+| 20 | Classes & OOP | `class` syntax, `new` keyword, private fields (`#`), object references | ✅ |
+| 21 | OOP Encapsulation | Private fields, getters/setters, controlled state changes, private static fields | ✅ |
+| 22 | OOP Inheritance | Single, multiple (mixins), multi-level, hierarchical, `extends`, `super` | ✅ |
+| 23 | OOP Polymorphism | Method overriding, runtime dispatch, why JS has no overloading | ✅ |
+| 24 | OOP Interview Practice | Constructors, default params, `return this` chaining, `super` chains | ✅ |
+| 25 | TypeScript | Annotations, primitives, arrays, `any` vs `unknown`, `void` vs `never` | ✅ |
+| — | MCQ Practice | Array multiple-choice bank (more coming) | 🚧 |
+| — | IQ_Notes | Standalone concept references via prompt template | 🚧 |
+
+**Suggested next chapters:** Playwright fixtures · Page Object Model · API testing with `request` · Network interception
