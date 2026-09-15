@@ -12,6 +12,12 @@ npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 
+# TypeScript build output
+dist/
+build/
+*.tsbuildinfo
+*.js.map
+
 # OS files
 .DS_Store
 Thumbs.db
