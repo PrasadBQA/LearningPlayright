@@ -31,3 +31,8 @@ class UITest extends BaseTest {
         console.log("  GIVE LOAN");
     }
 }
+
+let uitest = new UITest("JS!");
+
+
+//osdjjfospjdfsjfdoish
