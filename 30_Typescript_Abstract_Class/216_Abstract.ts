@@ -33,6 +33,7 @@ class UITest extends BaseTest {
 }
 
 let uitest = new UITest("JS!");
-
+let uitest1 = new UITest("JS!");
+let uitest2 = new UITest("JS!");
 
 //osdjjfospjdfsjfdoish
